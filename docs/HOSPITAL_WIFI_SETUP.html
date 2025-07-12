@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>院内 WiFi 接続設定ガイド</title>
+    <style>
+        body {
+            font-family: "Meiryo", "Yu Gothic", sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background: #f9f9f9;
+            color: #333;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+        }
+        h3 {
+            color: #27ae60;
+            margin-top: 25px;
+        }
+        .header-info {
+            background: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border-left: 4px solid #3498db;
+        }
+        .code-block {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+        .important {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        .warning {
+            background: #f8d7da;
+            border: 1px solid #dc3545;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        .info-box {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        ul, ol {
+            margin: 15px 0;
+            padding-left: 25px;
+        }
+        li {
+            margin: 8px 0;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 10px 20px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        .back-link:hover {
+            background: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header-info">
+            <strong>作成日:</strong> 2025年7月3日<br>
+            <strong>対象システム:</strong> 脳機能障害者社会復帰支援システム
+        </div>
+
+        <h1>院内 WiFi 接続設定ガイド</h1>
+
+        <h2>概要</h2>
+        <p>院内 WiFi 環境でのシステム接続設定について説明します。</p>
+
+        <h2>接続先設定</h2>
+
+        <div class="warning">
+            <h3>現在の設定（要変更）</h3>
+            <ul>
+                <li><strong>サーバー IP:</strong> <code>192.168.1.100</code> ← <strong>実際の院内 IP に変更が必要</strong></li>
+                <li><strong>API ポート:</strong> <code>3000</code></li>
+                <li><strong>フロントエンドポート:</strong> <code>5500</code></li>
+            </ul>
+        </div>
+
+        <div class="info-box">
+            <h3>院内 WiFi での接続先</h3>
+            <div class="code-block">
+<pre><code>APIサーバー: http://[院内IP]:3000
+フロントエンド: http://[院内IP]:5500</code></pre>
+            </div>
+        </div>
+
+        <h2>設定変更手順</h2>
+
+        <h3>1. IP アドレスの確認</h3>
+        <div class="code-block">
+<pre><code># Windowsの場合
+ipconfig
+
+# 院内WiFiのIPアドレスを確認
+# 例: 192.168.10.50</code></pre>
+        </div>
+
+        <h3>2. 設定ファイルの変更</h3>
+
+        <h4>config.js</h4>
+        <div class="code-block">
+<pre><code>server: {
+    localIP: '192.168.10.50', // 実際の院内IPに変更
+    publicIP: '192.168.10.50'  // 実際の院内IPに変更
+}</code></pre>
+        </div>
+
+        <h4>port_config.js</h4>
+        <div class="code-block">
+<pre><code>LOCAL_IP: '192.168.10.50', // 実際の院内IPに変更
+API_BASE_URL: 'http://192.168.10.50:3000',
+FRONTEND_BASE_URL: 'http://192.168.10.50:5500'</code></pre>
+        </div>
+
+        <h3>3. サーバー起動</h3>
+        <div class="code-block">
+<pre><code>node server.js</code></pre>
+        </div>
+
+        <h2>接続確認</h2>
+
+        <h3>ブラウザでの確認</h3>
+        <ol>
+            <li><code>http://[院内IP]:3000</code> - API サーバー</li>
+            <li><code>http://[院内IP]:5500</code> - フロントエンド</li>
+        </ol>
+
+        <h3>コンソールでの確認</h3>
+        <div class="code-block">
+<pre><code>// ブラウザのコンソールで実行
+window.checkHospitalWiFiConnection();</code></pre>
+        </div>
+
+        <div class="important">
+            <h3>注意事項</h3>
+            <ul>
+                <li>院内 WiFi の IP アドレスは固定 IP を推奨</li>
+                <li>ファイアウォールでポート 3000 と 5500 を開放</li>
+                <li>セキュリティ設定の確認が必要</li>
+            </ul>
+        </div>
+
+        <a href="index.html" class="back-link">← 資料一覧に戻る</a>
+    </div>
+</body>
+</html> 

@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>脳トレゲーム</title>
+    <!-- 利用履歴記録ライブラリ -->
+    <script src="js/usage_logger.js"></script>
+    <script src="js/error_alert.js"></script>
+    <!-- 音声ガイド機能 -->
+    <script src="js/voice_guide.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      body {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        font-family: "Segoe UI", "Meiryo", sans-serif;
+        min-height: 100vh;
+        color: #333;
+      }
+      
+      .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      
+      .header {
+        text-align: center;
+        margin-bottom: 40px;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(10px);
+      }
+      
+      .header h1 {
+        font-size: 3em;
+        font-weight: bold;
+        background: linear-gradient(45deg, #27ae60, #2ecc71);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 20px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      
+      .header-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        flex-wrap: wrap;
+      }
+      
+      .header-btn {
+        background: linear-gradient(45deg, #3498db, #2980b9);
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 25px;
+        font-size: 1em;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+        text-decoration: none;
+        display: inline-block;
+      }
+      
+      .header-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+      }
+      
+      .navigation {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 15px;
+        padding: 20px;
+        margin-bottom: 30px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(10px);
+      }
+      
+      .nav-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+      
+      .nav-title {
+        font-size: 2.2em;
+        font-weight: bold;
+        color: #2c3e50;
+        margin: 0;
+      }
+      
+      .nav-buttons {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      
+      .nav-btn {
+        background: linear-gradient(45deg, #27ae60, #2ecc71);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 20px;
+        font-size: 0.95em;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 3px 12px rgba(39, 174, 96, 0.3);
+      }
+      
+      .nav-btn:nth-child(2) {
+        background: linear-gradient(45deg, #e67e22, #f39c12);
+        box-shadow: 0 3px 12px rgba(230, 126, 34, 0.3);
+      }
+      
+      .nav-btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 5px 15px rgba(39, 174, 96, 0.4);
+      }
+      
+      .nav-btn:nth-child(2):hover {
+        box-shadow: 0 5px 15px rgba(230, 126, 34, 0.4);
+      }
+      
+      .card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 25px;
+        margin-top: 30px;
+      }
+      
+      .card {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        padding: 25px;
+        text-align: center;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        cursor: pointer;
+        text-decoration: none;
+        color: inherit;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+      
+      .card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(45deg, #27ae60, #2ecc71);
+        transform: scaleX(0);
+        transition: transform 0.3s ease;
+      }
+      
+      .card:hover {
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+      }
+      
+      .card:hover::before {
+        transform: scaleX(1);
+      }
+      
+      .card-number {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        background: linear-gradient(45deg, #27ae60, #2ecc71);
+        color: white;
+        padding: 6px 12px;
+        border-radius: 15px;
+        font-weight: bold;
+        font-size: 0.85em;
+        box-shadow: 0 3px 10px rgba(39, 174, 96, 0.3);
+        z-index: 1;
+      }
+      
+      .card-icon {
+        font-size: 3em;
+        margin: 20px 0 15px 0;
+        display: block;
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+      }
+      
+      .card-title {
+        font-size: 1.4em;
+        font-weight: bold;
+        color: #2c3e50;
+        margin-bottom: 12px;
+        line-height: 1.3;
+      }
+      
+      .card-desc {
+        color: #666;
+        font-size: 1em;
+        line-height: 1.6;
+        margin-top: 10px;
+      }
+      
+      .category-section {
+        margin-bottom: 40px;
+      }
+      
+      .category-title {
+        font-size: 1.8em;
+        font-weight: bold;
+        color: #2c3e50;
+        margin-bottom: 20px;
+        padding: 15px 25px;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(10px);
+        border-left: 5px solid #27ae60;
+      }
+      
+      @media (max-width: 768px) {
+        .container {
+          padding: 15px;
+        }
+        
+        .header h1 {
+          font-size: 2em;
+        }
+        
+        .nav-title {
+          font-size: 1.6em;
+        }
+        
+        .card-grid {
+          grid-template-columns: 1fr;
+          gap: 20px;
+        }
+        
+        .nav-row {
+          flex-direction: column;
+          align-items: center;
+        }
+        
+        .header-buttons {
+          flex-direction: column;
+          align-items: center;
+        }
+      }
+      
+      @media (max-width: 480px) {
+        .header h1 {
+          font-size: 1.8em;
+        }
+        
+        .nav-title {
+          font-size: 1.4em;
+        }
+        
+        .card {
+          padding: 20px;
+        }
+        
+        .card-icon {
+          font-size: 2.5em;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>脳トレゲーム</h1>
+
+      <div class="card-grid">
+        <!-- 記憶・脳トレ系 -->
+        <a href="./click_training_game.html?test=1" class="card" onclick="logGameClick('クリック練習ゲーム')">
+          <div class="card-number">No.1</div>
+          <span class="card-icon">🖱️</span>
+          <div class="card-title">指先運動・クリック練習ゲーム</div>
+          <div class="card-desc">正確なクリック操作を練習</div>
+        </a>
+        
+        <!-- 視覚・眼トレーニング系 -->
+        <a href="./eye_training_index.html?test=1" class="card" onclick="logGameClick('眼の訓練ゲーム一覧')">
+          <div class="card-number">No.2</div>
+          <span class="card-icon">🔍</span>
+          <div class="card-title">眼の訓練ゲーム一覧</div>
+          <div class="card-desc">視力と眼の機能を鍛えるトレーニング</div>
+        </a>
+        
+        <!-- 運転・シミュレーション系 -->
+        <a href="./integrated_driving_system.html?test=1" class="card" onclick="logGameClick('統合運転システム')">
+          <div class="card-number">No.3</div>
+          <span class="card-icon">🚗</span>
+          <div class="card-title">統合運転システム</div>
+          <div class="card-desc">総合的な運転技術をトレーニング</div>
+        </a>
+        
+        <a href="./sound_bath_game.html?test=1" class="card" onclick="logGameClick('サウンドバス')">
+          <div class="card-number">No.4</div>
+          <span class="card-icon">🎵</span>
+          <div class="card-title">サウンドバス 音響リラクゼーション</div>
+          <div class="card-desc">癒しの音でリラックスするゲーム</div>
+        </a>
+        
+        <a href="./webcam_rehabilitation_game.html?test=1" class="card" onclick="logGameClick('Webカメラリハビリゲーム')">
+          <div class="card-number">No.5</div>
+          <span class="card-icon">📹</span>
+          <div class="card-title">カメラモーションリハビリ体操</div>
+          <div class="card-desc">Webカメラを使ったリハビリゲーム</div>
+        </a>
+
+    <script>
+      // 利用履歴記録
+      if (typeof usageLogger !== 'undefined') {
+        usageLogger.logGameStart('ゲーム一覧 新規プロジェクト', 'new_project_games');
+      }
+
+      // ゲームクリック時の記録
+      function logGameClick(gameName) {
+        if (typeof usageLogger !== 'undefined') {
+          usageLogger.logGameClick(gameName);
+        }
+      }
+
+      // ページ読み込み時の処理
+      document.addEventListener("DOMContentLoaded", function () {
+        // 音声設定ボタンを追加
+        setTimeout(() => {
+          if (typeof addVoiceSettingsButton === 'function') {
+            addVoiceSettingsButton();
+          }
+        }, 1000);
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>統合リハビリゲーム技術仕様書</title>
+    <style>
+        body {
+            font-family: "Meiryo", "Yu Gothic", sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background: #f9f9f9;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+            text-align: center;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+        }
+        h3 {
+            color: #34495e;
+            margin-top: 25px;
+        }
+        .feature-box {
+            background: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            border-left: 4px solid #3498db;
+        }
+        .technical-box {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        .code-block {
+            background: #2d3436;
+            color: #dfe6e9;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+        .warning {
+            background: #f8d7da;
+            border: 1px solid #dc3545;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        .success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        .note {
+            background: #e3f2fd;
+            border: 1px solid #bbdefb;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 10px 20px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        .back-link:hover {
+            background: #2980b9;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        .icon {
+            font-size: 1.2em;
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎵 統合リハビリゲーム技術仕様書</h1>
+
+        <div class="feature-box">
+            <h2>📋 概要</h2>
+            <p>統合リハビリゲームは、上半身リズム体操と手の体操を同時実行できる革新的なリハビリシステムです。WEBカメラを使用したリアルタイム動作認識技術を活用し、高齢者やリハビリ患者の運動機能回復を支援します。双画面レイアウトにより、上半身と手の動きを同時にトレーニングすることで、より効果的なリハビリを実現します。</p>
+        </div>
+
+        <h2>🎯 システム概要</h2>
+        
+        <h3>🏗️ アーキテクチャ</h3>
+        <ul>
+            <li><strong>フロントエンド:</strong> HTML5, CSS3, JavaScript (ES6+)</li>
+            <li><strong>カメラ技術:</strong> WebRTC MediaDevices API</li>
+            <li><strong>音声合成:</strong> Web Speech API</li>
+            <li><strong>AR機能:</strong> Canvas API + リアルタイム描画</li>
+            <li><strong>レスポンシブ対応:</strong> CSS Grid + Flexbox</li>
+        </ul>
+
+        <h3>🎮 主要機能</h3>
+        <div class="feature-box">
+            <h4>🖥️ 双画面レイアウト</h4>
+            <ul>
+                <li><strong>左画面:</strong> 上半身リズム体操</li>
+                <li><strong>右画面:</strong> 手の体操</li>
+                <li><strong>同時実行:</strong> 両方の体操を並行して実行</li>
+                <li><strong>統合管理:</strong> 一括開始・停止・リセット</li>
+            </ul>
+        </div>
+
+        <h2>🏃‍♂️ 上半身体操機能</h2>
+        
+        <h3>📋 体操プログラム</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>体操名</th>
+                    <th>動き</th>
+                    <th>リズム</th>
+                    <th>効果</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>肩の体操</td>
+                    <td>肩上げ、肩回し、肩甲骨運動</td>
+                    <td>1,2,3,4</td>
+                    <td>肩関節の可動域改善</td>
+                </tr>
+                <tr>
+                    <td>腕の体操</td>
+                    <td>腕上げ、腕回し、腕振り</td>
+                    <td>1,2,1,2</td>
+                    <td>上肢筋力強化</td>
+                </tr>
+                <tr>
+                    <td>上半身リズム</td>
+                    <td>左右振り、前後運動、回転運動</td>
+                    <td>1,1,2,2</td>
+                    <td>協調性向上</td>
+                </tr>
+                <tr>
+                    <td>ダンス体操</td>
+                    <td>上半身ダンス、リズムダンス、フリーダンス</td>
+                    <td>1,2,3,4,1,2,3,4</td>
+                    <td>リズム感覚向上</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>✋ 手の体操機能</h2>
+        
+        <h3>📋 体操プログラム</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>体操名</th>
+                    <th>動き</th>
+                    <th>リズム</th>
+                    <th>効果</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>指の体操</td>
+                    <td>各指の個別運動</td>
+                    <td>2,2,2,2,2</td>
+                    <td>手指の細かい動き</td>
+                </tr>
+                <tr>
+                    <td>握力体操</td>
+                    <td>手を握る、開く、強く握る</td>
+                    <td>3,2,3,2,2</td>
+                    <td>握力強化</td>
+                </tr>
+                <tr>
+                    <td>手振り体操</td>
+                    <td>右左上下、円を描く</td>
+                    <td>2,2,2,3,2</td>
+                    <td>手首の可動域</td>
+                </tr>
+                <tr>
+                    <td>手首回し</td>
+                    <td>時計回り、反時計回り</td>
+                    <td>3,3,4,2,3</td>
+                    <td>手首関節の柔軟性</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>🎵 音声・AR機能</h2>
+        
+        <div class="technical-box">
+            <h3>🔊 音声合成機能</h3>
+            <ul>
+                <li><strong>技術:</strong> Web Speech API (SpeechSynthesis)</li>
+                <li><strong>言語:</strong> 日本語 (ja-JP)</li>
+                <li><strong>速度:</strong> 0.9倍速（聞き取りやすさ重視）</li>
+                <li><strong>音程:</strong> 1.0（自然な音声）</li>
+            </ul>
+        </div>
+
+        <div class="technical-box">
+            <h3>🎯 AR機能</h3>
+            <ul>
+                <li><strong>動き指示:</strong> リアルタイムARテキスト表示</li>
+                <li><strong>方向指示:</strong> アニメーション矢印</li>
+                <li><strong>フィードバック:</strong> 動作評価のAR表示</li>
+                <li><strong>技術:</strong> Canvas API + CSS3 アニメーション</li>
+            </ul>
+        </div>
+
+        <h2>🤖 AIキャラクター機能</h2>
+        
+        <h3>🎭 キャラクター種類</h3>
+        <ul>
+            <li><strong>絵文字キャラクター:</strong> シンプルで軽量</li>
+            <li><strong>女の子キャラクター:</strong> CSSで描画、感情表現豊か</li>
+            <li><strong>マスコットキャラクター:</strong> 親しみやすいデザイン</li>
+        </ul>
+
+        <h3>😊 感情表現</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>感情</th>
+                    <th>表示</th>
+                    <th>アニメーション</th>
+                    <th>メッセージ例</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>喜び</td>
+                    <td>😊</td>
+                    <td>バウンス</td>
+                    <td>「素晴らしい！」</td>
+                </tr>
+                <tr>
+                    <td>励まし</td>
+                    <td>💪</td>
+                    <td>ウェーブ</td>
+                    <td>「頑張ってください」</td>
+                </tr>
+                <tr>
+                    <td>中立</td>
+                    <td>😐</td>
+                    <td>なし</td>
+                    <td>「続けてください」</td>
+                </tr>
+                <tr>
+                    <td>悲しみ</td>
+                    <td>😢</td>
+                    <td>縮小</td>
+                    <td>「もう一度やってみましょう」</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>📊 進捗分析機能</h2>
+        
+        <div class="feature-box">
+            <h3>📈 統合進捗分析</h3>
+            <ul>
+                <li><strong>総合スコア:</strong> 上半身 + 手のスコア合計</li>
+                <li><strong>平均精度:</strong> 各体操の平均精度率</li>
+                <li><strong>改善度:</strong> 前回比での改善率</li>
+                <li><strong>一貫性:</strong> 動作の一貫性スコア</li>
+            </ul>
+        </div>
+
+        <h3>🎯 スコアシステム</h3>
+        <ul>
+            <li><strong>基本スコア:</strong> 動作の正確性に基づく</li>
+            <li><strong>コンボボーナス:</strong> 連続成功による加算</li>
+            <li><strong>レベルアップ:</strong> 100ポイントごとにレベルアップ</li>
+            <li><strong>統合評価:</strong> 両体操の相関分析</li>
+        </ul>
+
+        <h2>🔧 技術仕様</h2>
+        
+        <h3>💻 システム要件</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>項目</th>
+                    <th>要件</th>
+                    <th>推奨</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>ブラウザ</td>
+                    <td>Chrome 80+, Firefox 75+, Safari 13+</td>
+                    <td>Chrome 最新版</td>
+                </tr>
+                <tr>
+                    <td>カメラ</td>
+                    <td>WEBカメラ（USB接続）</td>
+                    <td>HD画質対応</td>
+                </tr>
+                <tr>
+                    <td>音声</td>
+                    <td>スピーカー/ヘッドフォン</td>
+                    <td>ステレオ対応</td>
+                </tr>
+                <tr>
+                    <td>画面解像度</td>
+                    <td>1024x768以上</td>
+                    <td>1920x1080以上</td>
+                </tr>
+                <tr>
+                    <td>メモリ</td>
+                    <td>4GB以上</td>
+                    <td>8GB以上</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>🔌 API仕様</h3>
+        <div class="code-block">
+// カメラアクセス
+navigator.mediaDevices.getUserMedia({
+    video: {
+        width: 640,
+        height: 480,
+        facingMode: 'user'
+    }
+})
+
+// 音声合成
+const utterance = new SpeechSynthesisUtterance(text);
+utterance.lang = 'ja-JP';
+utterance.rate = 0.9;
+speechSynthesis.speak(utterance);
+
+// アニメーションループ
+function gameLoop() {
+    if (isPlaying) {
+        // スコア計算
+        // 表示更新
+        requestAnimationFrame(gameLoop);
+    }
+}
+        </div>
+
+        <h2>🚀 運用・保守</h2>
+        
+        <div class="warning">
+            <h3>⚠️ 重要注意事項</h3>
+            <ul>
+                <li><strong>カメラ権限:</strong> ブラウザでのカメラアクセス許可が必要</li>
+                <li><strong>HTTPS環境:</strong> 本番環境ではHTTPS必須</li>
+                <li><strong>プライバシー:</strong> 患者の個人情報保護に配慮</li>
+                <li><strong>ネットワーク:</strong> 安定したネットワーク環境が必要</li>
+            </ul>
+        </div>
+
+        <div class="success">
+            <h3>✅ 推奨運用環境</h3>
+            <ul>
+                <li><strong>院内WiFi:</strong> 安定した院内ネットワーク</li>
+                <li><strong>専用端末:</strong> リハビリ専用のタブレット/PC</li>
+                <li><strong>定期メンテナンス:</strong> 週1回の動作確認</li>
+                <li><strong>バックアップ:</strong> 進捗データの定期バックアップ</li>
+            </ul>
+        </div>
+
+        <h3>📋 定期点検項目</h3>
+        <ul>
+            <li>カメラ動作確認</li>
+            <li>音声出力確認</li>
+            <li>体操プログラム動作確認</li>
+            <li>スコア計算精度確認</li>
+            <li>AR機能動作確認</li>
+            <li>AIキャラクター表示確認</li>
+        </ul>
+
+        <h2>🔮 今後の拡張予定</h2>
+        
+        <div class="note">
+            <h3>🚀 次期バージョン予定機能</h3>
+            <ul>
+                <li><strong>MediaPipe統合:</strong> より高精度な姿勢認識</li>
+                <li><strong>個人化機能:</strong> 患者ごとのカスタマイズ</li>
+                <li><strong>データ分析:</strong> 詳細な進捗分析レポート</li>
+                <li><strong>多言語対応:</strong> 英語・中国語等の多言語化</li>
+                <li><strong>VR対応:</strong> VRヘッドセットでの利用</li>
+                <li><strong>AIコーチ:</strong> より高度なAI指導機能</li>
+            </ul>
+        </div>
+
+        <h2>📞 サポート・連絡先</h2>
+        <p>技術的な問題や運用に関するご質問がございましたら、システム管理者までお気軽にお問い合わせください。</p>
+
+        <div class="note">
+            <p><strong>この技術仕様書は、統合リハビリゲームの開発・運用・保守に必要な技術情報を網羅しています。システムの導入・運用時には、この仕様書を参考に適切な環境設定と運用管理を行ってください。</strong></p>
+        </div>
+
+        <a href="index.html" class="back-link">← 資料一覧に戻る</a>
+    </div>
+</body>
+</html> 

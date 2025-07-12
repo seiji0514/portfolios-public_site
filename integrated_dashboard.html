@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>高性能 統合ダッシュボード</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <style>
+    body { font-family: 'Segoe UI', 'Meiryo', sans-serif; background: #f4f7fb; margin: 0; }
+    .header { background: #fff; padding: 32px 0 16px 0; text-align: center; box-shadow: 0 2px 8px #e0e0e0; }
+    .header h1 { color: #2574c7; margin-bottom: 8px; }
+    .header p { color: #555; }
+    .system-tabs { display: flex; justify-content: center; gap: 16px; margin: 24px 0 16px 0; flex-wrap: wrap; }
+    .system-tab { background: #667eea; color: #fff; border: none; border-radius: 20px; padding: 12px 28px; font-size: 1.1em; font-weight: bold; cursor: pointer; transition: background 0.2s; }
+    .system-tab.active, .system-tab:hover { background: #2574c7; }
+    .dashboard-section { display: none; }
+    .dashboard-section.active { display: block; }
+    .main-panel { max-width: 1100px; margin: 0 auto; display: flex; gap: 32px; flex-wrap: wrap; justify-content: center; }
+    .card { background: #fff; border-radius: 18px; box-shadow: 0 4px 24px #e0e0e0; padding: 32px 24px; min-width: 320px; flex: 1 1 320px; margin-bottom: 24px; }
+    .card h2 { color: #2574c7; font-size: 1.2em; margin-bottom: 12px; }
+    .kpi { font-size: 2em; font-weight: bold; color: #764ba2; margin-bottom: 8px; }
+    .notice-list { list-style: disc; padding-left: 20px; color: #444; }
+    .ai-result { background: #f6f8fa; border-radius: 10px; padding: 12px; margin: 12px 0; }
+    .map-area { width: 100%; height: 320px; border-radius: 16px; overflow: hidden; box-shadow: 0 2px 8px #e0e0e0; margin-bottom: 24px;}
+    canvas { width: 100% !important; height: 180px !important; }
+    @media (max-width: 900px) {
+      .main-panel { flex-direction: column; gap: 0; }
+      .map-area { height: 220px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>高性能 統合ダッシュボード</h1>
+    <p>多業種の最先端システムをワンタッチで切替・俯瞰</p>
+  </div>
+  <div class="system-tabs">
+    <button class="system-tab active" onclick="showSystem('smart-factory')">スマートファクトリー</button>
+    <button class="system-tab" onclick="showSystem('drone-mapping')">ドローン3Dマッピング</button>
+    <button class="system-tab" onclick="showSystem('demand-control')">需要予測＆自動制御</button>
+    <button class="system-tab" onclick="showSystem('env-monitor')">環境モニタリング</button>
+    <button class="system-tab" onclick="showSystem('disaster-ai')">AI災害予測</button>
+    <button class="system-tab" onclick="showSystem('personalized-med')">個別化医療AI</button>
+  </div>
+
+  <!-- スマートファクトリー -->
+  <div id="smart-factory" class="dashboard-section active">
+    <div class="main-panel">
+      <div class="card">
+        <h2>稼働中ライン数</h2>
+        <div class="kpi">5ライン</div>
+        <p>現在稼働中の生産ライン</p>
+      </div>
+      <div class="card">
+        <h2>異常アラート</h2>
+        <div class="kpi" style="color:#e74c3c;">1件</div>
+        <p>AIが検知した異常（要対応）</p>
+      </div>
+      <div class="card">
+        <h2>メンテナンス予定</h2>
+        <ul class="notice-list">
+          <li>ラインA：7/20 10:00～</li>
+          <li>ラインC：7/22 14:00～</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ドローン3Dマッピング -->
+  <div id="drone-mapping" class="dashboard-section">
+    <div class="main-panel">
+      <div class="card">
+        <h2>本日の飛行回数</h2>
+        <div class="kpi">3回</div>
+        <p>本日実施したドローン測量</p>
+      </div>
+      <div class="card">
+        <h2>3Dマップ生成数</h2>
+        <div class="kpi" style="color:#45a049;">2件</div>
+        <p>新規生成された3Dマップ</p>
+      </div>
+      <div class="card">
+        <h2>お知らせ</h2>
+        <ul class="notice-list">
+          <li>新しい飛行ルートが追加されました</li>
+          <li>システムメンテナンス予定：7/22</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 需要予測＆自動制御 -->
+  <div id="demand-control" class="dashboard-section">
+    <div class="main-panel">
+      <div class="card">
+        <h2>本日の予測精度</h2>
+        <div class="kpi">98%</div>
+        <p>AIによる気象・需要予測の精度</p>
+      </div>
+      <div class="card">
+        <h2>自動制御中システム</h2>
+        <div class="kpi" style="color:#45a049;">4件</div>
+        <p>現在自動制御中の設備</p>
+      </div>
+      <div class="card">
+        <h2>需要予測グラフ</h2>
+        <canvas id="demandChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- 環境モニタリング -->
+  <div id="env-monitor" class="dashboard-section">
+    <div class="main-panel">
+      <div class="card">
+        <h2>現在の異常アラート</h2>
+        <div class="kpi" style="color:#e74c3c;">1件</div>
+        <p>大気汚染レベル上昇</p>
+      </div>
+      <div class="card">
+        <h2>センサー稼働数</h2>
+        <div class="kpi">12台</div>
+        <p>稼働中のIoTセンサー数</p>
+      </div>
+      <div class="card">
+        <h2>センサーデータグラフ</h2>
+        <canvas id="sensorChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI災害予測 -->
+  <div id="disaster-ai" class="dashboard-section">
+    <div class="main-panel">
+      <div class="map-area" id="map"></div>
+      <div class="card" style="min-width:320px;">
+        <h2>最新アラート</h2>
+        <ul class="notice-list" style="color:#e74c3c;">
+          <li>洪水警戒: ○○川（高水位）</li>
+          <li>土砂災害警戒: △△地区</li>
+        </ul>
+        <h2>AI予測グラフ</h2>
+        <canvas id="rainChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- 個別化医療AI -->
+  <div id="personalized-med" class="dashboard-section">
+    <div class="main-panel">
+      <div class="card">
+        <h2>本日の解析件数</h2>
+        <div class="kpi">12件</div>
+        <p>新規ゲノムデータのAI解析</p>
+      </div>
+      <div class="card">
+        <h2>推奨治療プラン</h2>
+        <div class="kpi" style="color:#45a049;">8件</div>
+        <p>AIが新たに提案した治療プラン</p>
+      </div>
+      <div class="card">
+        <h2>お知らせ</h2>
+        <ul class="notice-list">
+          <li>治療効果データが更新されました</li>
+          <li>新しい遺伝子パネルに対応</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // タブ切替
+    function showSystem(id) {
+      document.querySelectorAll('.system-tab').forEach(e=>e.classList.remove('active'));
+      document.querySelectorAll('.dashboard-section').forEach(e=>e.classList.remove('active'));
+      document.querySelector('.system-tab[onclick*="'+id+'"]').classList.add('active');
+      document.getElementById(id).classList.add('active');
+      // グラフや地図の初期化
+      if(id==='demand-control' && !window.demandChartDrawn){ drawDemandChart(); window.demandChartDrawn=true; }
+      if(id==='env-monitor' && !window.sensorChartDrawn){ drawSensorChart(); window.sensorChartDrawn=true; }
+      if(id==='disaster-ai' && !window.mapDrawn){ drawDisasterMap(); window.mapDrawn=true; }
+    }
+    // 需要予測グラフ
+    function drawDemandChart() {
+      const ctx = document.getElementById('demandChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ['0時','4時','8時','12時','16時','20時','24時'],
+          datasets: [{
+            label: '需要予測 (kW)',
+            data: [120, 140, 180, 220, 210, 170, 130],
+            borderColor: '#2574c7',
+            backgroundColor: 'rgba(38,116,199,0.1)',
+            fill: true,
+            tension: 0.4
+          }]
+        },
+        options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
+      });
+    }
+    // 環境モニタリンググラフ
+    function drawSensorChart() {
+      const ctx = document.getElementById('sensorChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ['0時','4時','8時','12時','16時','20時','24時'],
+          datasets: [{
+            label: 'PM2.5 (μg/m³)',
+            data: [12, 18, 22, 35, 28, 20, 15],
+            borderColor: '#45a049',
+            backgroundColor: 'rgba(69,160,73,0.1)',
+            fill: true,
+            tension: 0.4
+          }]
+        },
+        options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
+      });
+    }
+    // AI災害予測地図＋グラフ
+    function drawDisasterMap() {
+      const map = L.map('map').setView([35.68, 139.76], 10);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+      }).addTo(map);
+      L.marker([35.68, 139.76]).addTo(map).bindPopup('東京観測点<br>水位: 3.2m');
+      L.circle([35.70, 139.80], {radius: 2000, color: 'red', fillOpacity: 0.2}).addTo(map).bindPopup('洪水警戒エリア');
+      const ctx = document.getElementById('rainChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ['12時', '13時', '14時', '15時', '16時', '17時'],
+          datasets: [{
+            label: '降雨量予測 (mm/h)',
+            data: [5, 12, 18, 30, 22, 10],
+            borderColor: '#2574c7',
+            backgroundColor: 'rgba(38,116,199,0.1)',
+            fill: true,
+            tension: 0.4
+          }]
+        },
+        options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
+      });
+    }
+  </script>
+</body>
+</html>

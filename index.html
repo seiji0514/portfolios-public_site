@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OGAWA SEIJI PORTFOLIO</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="canonical" href="/" />
+    <meta property="og:url" content="/" />
+    <!-- Swiper CDN追加 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <div class="logo">
+          <img src="./2024-12-02_21h39_19.png" alt="ロゴ" />
+          <h1 class="site-title">OGAWA SEIJI PORTFOLIO</h1>
+        </div>
+        <div class="menu-toggle">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <ul class="nav-links">
+          <li><a href="./index.html">ホーム</a></li>
+          <li><a href="./about.html">自己紹介</a></li>
+          <li><a href="./disability.html">障害について</a></li>
+          <li><a href="./works.html">制作物</a></li>
+          <li><a href="./contact.html">お問い合わせ</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <!-- ヒーロー画像部分をテキストのみのプロジェクト紹介スライダーに変更 -->
+      <section class="hero-project-slider-section">
+        <div class="slider-container">
+          
+          <div class="slider-texts">
+            <div class="slider-text" style="display:block;">
+              
+            </div>
+            <div class="slider-text" style="display:none;">
+              <h2>SmartCity Platform <span class="status-badge-mini developing">開発中</span></h2>
+            </div>
+          </div>
+          <button class="slider-arrow slider-arrow-right" onclick="moveSlide(1)">&#9654;</button>
+        </div>
+      </section>
+      <!-- スライドショー画像埋め込みここから -->
+      <section class="section slideshow-section" style="padding-top:2rem; padding-bottom:2rem;">
+        <div class="content" style="background:transparent; box-shadow:none; padding:0;">
+          <div class="swiper" style="max-width:900px; margin:auto;">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide"><img src="slides/slide1.png" alt="スライド1" style="width:100%;border-radius:12px;"></div>
+              <div class="swiper-slide"><img src="slides/slide2.png" alt="スライド2" style="width:100%;border-radius:12px;"></div>
+              <div class="swiper-slide"><img src="slides/slide3.png" alt="スライド3" style="width:100%;border-radius:12px;"></div>
+              <div class="swiper-slide"><img src="slides/slide4.png" alt="スライド4" style="width:100%;border-radius:12px;"></div>
+              <div class="swiper-slide"><img src="slides/slide5.png" alt="スライド5" style="width:100%;border-radius:12px;"></div>
+              <div class="swiper-slide"><img src="slides/slide6.png" alt="スライド6" style="width:100%;border-radius:12px;"></div>
+              <div class="swiper-slide"><img src="slides/slide7.png" alt="スライド7" style="width:100%;border-radius:12px;"></div>
+              <div class="swiper-slide"><img src="slides/slide8.png" alt="スライド8" style="width:100%;border-radius:12px;"></div>
+              <div class="swiper-slide"><img src="slides/slide9.png" alt="スライド9" style="width:100%;border-radius:12px;"></div>
+              <div class="swiper-slide"><img src="slides/slide10.png" alt="スライド10" style="width:100%;border-radius:12px;"></div>
+              <div class="swiper-slide"><img src="slides/slide11.png" alt="スライド11" style="width:100%;border-radius:12px;"></div>
+              <div class="swiper-slide"><img src="slides/slide12.png" alt="スライド12" style="width:100%;border-radius:12px;"></div>
+              <div class="swiper-slide"><img src="slides/slide13.png" alt="スライド13" style="width:100%;border-radius:12px;"></div>
+              <div class="swiper-slide"><img src="slides/slide14.png" alt="スライド14" style="width:100%;border-radius:12px;"></div>
+              <div class="swiper-slide"><img src="slides/slide15.png" alt="スライド15" style="width:100%;border-radius:12px;"></div>
+              <div class="swiper-slide"><img src="slides/slide16.png" alt="スライド16" style="width:100%;border-radius:12px;"></div>
+              <div class="swiper-slide"><img src="slides/slide17.png" alt="スライド17" style="width:100%;border-radius:12px;"></div>
+              <div class="swiper-slide"><img src="slides/slide18.png" alt="スライド18" style="width:100%;border-radius:12px;"></div>
+              <div class="swiper-slide"><img src="slides/slide19.png" alt="スライド19" style="width:100%;border-radius:12px;"></div>
+              <div class="swiper-slide"><img src="slides/slide20.png" alt="スライド20" style="width:100%;border-radius:12px;"></div>
+              <div class="swiper-slide"><img src="slides/slide21.png" alt="スライド21" style="width:100%;border-radius:12px;"></div>
+              <div class="swiper-slide"><img src="slides/slide22.png" alt="スライド22" style="width:100%;border-radius:12px;"></div>
+              <div class="swiper-slide"><img src="slides/slide23.png" alt="スライド23" style="width:100%;border-radius:12px;"></div>
+            </div>
+            <div class="swiper-pagination"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+          </div>
+        </div>
+      </section>
+      <!-- スライドショー画像埋め込みここまで -->
+
+      <section class="section quick-access-section">
+        <h2>主要プロジェクト</h2>
+        <div class="content">
+          <div class="quick-access-grid">
+            <div class="quick-access-item rehabilitation-quick">
+              <h3>リハビリシステム</h3>
+              <div class="quick-access-content">
+                <div class="system-brief">
+                  <h4>📋 システム概要</h4>
+                  <p>警察庁基準対応の運転シミュレーターと脳トレゲームを統合した、リハビリの社会復帰を支援するWebシステムです。病院の都合により実現不可となりましたが、設計・開発段階まで完了したプロジェクトです。</p>
+                  <div class="project-status-mini">
+                    <span class="status-badge-mini cancelled">実現不可</span>
+                  </div>
+                </div>
+                <div class="quick-access-links">
+                  <a href="./works.html#rehabilitation-system" class="quick-link">詳細を見る</a>
+                </div>
+              </div>
+          </div>
+          </div>
+        </div>
+      </section>
+      <footer class="footer">
+        <div class="footer-content">
+          <div class="footer-info">
+            <h3>OGAWA SEIJI PORTFOLIO</h3>
+            <p>お仕事を承っております。</p>
+          </div>
+
+          <div class="footer-contact">
+            <h4>お問い合わせ</h4>
+            <p>Email: kaho052514@gmail.com</p>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025 OGAWA SEIJI PORTFOLIO. All rights reserved.</p>
+        </div>
+      </footer>
+    </main>
+    <script src="./script.js"></script>
+    <!-- Swiper CDN追加 -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+      // テキストのみのプロジェクト紹介スライダー
+      let currentSlide = 0;
+      const slides = document.querySelectorAll('.slider-text');
+      function showSlide(n) {
+        slides.forEach((el, i) => {
+          el.style.display = (i === n) ? 'block' : 'none';
+        });
+      }
+      function moveSlide(dir) {
+        currentSlide += dir;
+        if (currentSlide < 0) currentSlide = slides.length - 1;
+        if (currentSlide >= slides.length) currentSlide = 0;
+        showSlide(currentSlide);
+      }
+      // 初期表示
+      showSlide(currentSlide);
+      // プロジェクト紹介スライダー
+      let currentProjectSlide = 0;
+      const projectSlides = document.querySelectorAll('.project-slide');
+      function showProjectSlide(n) {
+        projectSlides.forEach((slide, i) => {
+          slide.style.display = (i === n) ? 'block' : 'none';
+        });
+      }
+      function moveProjectSlide(dir) {
+        currentProjectSlide += dir;
+        if (currentProjectSlide < 0) currentProjectSlide = projectSlides.length - 1;
+        if (currentProjectSlide >= projectSlides.length) currentProjectSlide = 0;
+        showProjectSlide(currentProjectSlide);
+      }
+      // Swiper初期化
+      document.addEventListener('DOMContentLoaded', function() {
+        new Swiper('.swiper', {
+          loop: true,
+          pagination: { el: '.swiper-pagination', clickable: true },
+          navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+          autoplay: { delay: 3000, disableOnInteraction: false },
+        });
+      });
+    </script>
+  </body>
+</html>

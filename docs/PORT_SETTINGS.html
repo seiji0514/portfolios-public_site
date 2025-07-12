@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ポート設定 - 完全固定版</title>
+    <style>
+        body {
+            font-family: "Meiryo", "Yu Gothic", sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background: #f9f9f9;
+            color: #333;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+        }
+        h3 {
+            color: #27ae60;
+            margin-top: 25px;
+        }
+        .header-info {
+            background: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border-left: 4px solid #3498db;
+        }
+        .code-block {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+        .important {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        .warning {
+            background: #f8d7da;
+            border: 1px solid #dc3545;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        ul, ol {
+            margin: 15px 0;
+            padding-left: 25px;
+        }
+        li {
+            margin: 8px 0;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 10px 20px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        .back-link:hover {
+            background: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header-info">
+            <strong>作成日:</strong> 2025年7月3日<br>
+            <strong>対象システム:</strong> 脳機能障害者社会復帰支援システム
+        </div>
+
+        <h1>ポート設定 - 完全固定版</h1>
+
+        <h2>概要</h2>
+        <p>このシステムでは、ポート設定を完全に固定し、環境変数による変更を無効化しています。</p>
+
+        <h2>固定ポート設定</h2>
+
+        <h3>サーバー側（API）</h3>
+        <ul>
+            <li><strong>ポート:</strong> <code>3000</code>（完全固定）</li>
+            <li><strong>URL:</strong> <code>http://localhost:3000</code></li>
+            <li><strong>設定ファイル:</strong> <code>config.js</code>, <code>server.js</code></li>
+        </ul>
+
+        <h3>フロントエンド側</h3>
+        <ul>
+            <li><strong>ポート:</strong> <code>5501</code>（Live Server 等で使用）</li>
+            <li><strong>URL:</strong> <code>http://localhost:5501</code></li>
+            <li><strong>設定ファイル:</strong> <code>port_config.js</code></li>
+        </ul>
+
+        <h2>設定ファイル</h2>
+
+        <h3>1. config.js</h3>
+        <div class="code-block">
+<pre><code>const config = {
+  server: {
+    port: 3000, // 完全固定
+    env: "production", // 本番環境固定
+  },
+  // ... その他の設定
+};</code></pre>
+        </div>
+
+        <h3>2. server.js</h3>
+        <div class="code-block">
+<pre><code>const config = require("./config");
+const PORT = config.server.port; // 3000固定</code></pre>
+        </div>
+
+        <h3>3. port_config.js</h3>
+        <div class="code-block">
+<pre><code>const PORT_CONFIG = {
+  API_PORT: 3000, // サーバーAPIポート
+  FRONTEND_PORT: 5501, // フロントエンドポート
+  API_BASE_URL: "http://localhost:3000",
+  FRONTEND_BASE_URL: "http://localhost:5501",
+  CONFIG_LOCKED: true, // 設定変更不可
+};
+Object.freeze(PORT_CONFIG); // 変更を防ぐ</code></pre>
+        </div>
+
+        <h2>変更方法</h2>
+
+        <h3>ポートを変更したい場合</h3>
+        <ol>
+            <li><code>config.js</code>の<code>server.port</code>を変更</li>
+            <li><code>server.js</code>の<code>PORT</code>変数を変更</li>
+            <li><code>port_config.js</code>の<code>API_PORT</code>と<code>API_BASE_URL</code>を変更</li>
+            <li>サーバーを再起動</li>
+        </ol>
+
+        <h3>フロントエンドポートを変更したい場合</h3>
+        <ol>
+            <li><code>port_config.js</code>の<code>FRONTEND_PORT</code>と<code>FRONTEND_BASE_URL</code>を変更</li>
+            <li>Live Server 等の設定を変更</li>
+        </ol>
+
+        <h2>セキュリティ設定</h2>
+
+        <h3>CORS 設定</h3>
+        <div class="code-block">
+<pre><code>allowedOrigins: ["http://127.0.0.1:5501", "http://localhost:5501"];</code></pre>
+        </div>
+
+        <h3>セッション設定</h3>
+        <div class="code-block">
+<pre><code>cookie: {
+    secure: false,     // HTTPでも動作
+    httpOnly: true,    // JavaScriptからアクセス不可
+    maxAge: 24 * 60 * 60 * 1000 // 24時間
+}</code></pre>
+        </div>
+
+        <h2>起動方法</h2>
+
+        <h3>サーバー起動</h3>
+        <div class="code-block">
+<pre><code>node server.js</code></pre>
+        </div>
+        <p>→ <code>http://localhost:3000</code>で起動</p>
+
+        <h3>フロントエンド起動</h3>
+        <div class="code-block">
+<pre><code># Live Server等を使用
+# http://localhost:5501 でアクセス</code></pre>
+        </div>
+
+        <h2>トラブルシューティング</h2>
+
+        <h3>ポートが使用中の場合</h3>
+        <ol>
+            <li>使用中のプロセスを確認
+                <div class="code-block">
+<pre><code>netstat -ano | findstr :3000</code></pre>
+                </div>
+            </li>
+            <li>プロセスを終了
+                <div class="code-block">
+<pre><code>taskkill /PID [プロセスID] /F</code></pre>
+                </div>
+            </li>
+        </ol>
+
+        <h3>CORS エラーが発生する場合</h3>
+        <ol>
+            <li><code>config.js</code>の<code>allowedOrigins</code>を確認</li>
+            <li>フロントエンドの URL が含まれているか確認</li>
+            <li>ブラウザのキャッシュをクリア</li>
+        </ol>
+
+        <div class="important">
+            <h3>注意事項</h3>
+            <ul>
+                <li>環境変数による設定変更は無効化されています</li>
+                <li>設定を変更する場合は、直接ファイルを編集してください</li>
+                <li>本番環境では、セキュリティ設定を適切に調整してください</li>
+                <li>ポート設定は完全に固定されているため、他のアプリケーションとの競合に注意してください</li>
+            </ul>
+        </div>
+
+        <h2>設定確認</h2>
+        <p>ブラウザのコンソールで以下を実行して設定を確認できます：</p>
+        <div class="code-block">
+<pre><code>window.validatePortConfig();</code></pre>
+        </div>
+
+        <a href="index.html" class="back-link">← 資料一覧に戻る</a>
+    </div>
+</body>
+</html> 

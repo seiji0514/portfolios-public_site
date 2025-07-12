@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <title>リハビリシステム 資料一覧</title>
+    <style>
+      body {
+        font-family: "Meiryo", "Yu Gothic", sans-serif;
+        margin: 2em;
+        background: #f9f9f9;
+      }
+      h1 {
+        color: #2c3e50;
+      }
+      h2 {
+        color: #2980b9;
+        margin-top: 2em;
+      }
+      h3 {
+        color: #27ae60;
+        margin-top: 1.5em;
+      }
+      ul {
+        font-size: 1.1em;
+      }
+      a {
+        color: #2980b9;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      .note {
+        color: #888;
+        font-size: 0.95em;
+      }
+      .system-info {
+        background: #e8f5e8;
+        border: 1px solid #27ae60;
+        border-radius: 8px;
+        padding: 1em;
+        margin: 1em 0;
+      }
+      .system-info h3 {
+        margin-top: 0;
+      }
+      .url-list {
+        background: #f8f9fa;
+        border-left: 4px solid #2980b9;
+        padding: 0.5em 1em;
+        margin: 0.5em 0;
+      }
+      .new-feature {
+        background: #fff3cd;
+        border: 1px solid #ffc107;
+        border-radius: 8px;
+        padding: 1em;
+        margin: 1em 0;
+      }
+      .new-feature h3 {
+        color: #856404;
+        margin-top: 0;
+      }
+      .port-info {
+        background: #d1ecf1;
+        border: 1px solid #bee5eb;
+        border-radius: 8px;
+        padding: 1em;
+        margin: 1em 0;
+      }
+      .port-info h3 {
+        color: #0c5460;
+        margin-top: 0;
+      }
+    </style>
+    <script src="../js/error_alert.js"></script>
+  </head>
+  <body>
+    <h1>🧠 リハビリシステム 資料一覧</h1>
+
+    <div class="new-feature" style="background:#ffe0e0; border:2px solid #e74c3c;">
+      <h2 style="color:#e74c3c;">⚠️ 最重要：現場目線の価値と公式基準の両立</h2>
+      <ul style="font-size:1.15em;">
+        <li><strong>地元地域コース：</strong>リハビリ患者が実際に運転する地元道路・生活圏を再現。<span style="color:#e74c3c;font-weight:bold;">警察庁基準に準拠した正式な運転評価にも対応済</span>。生活復帰・自信回復・QOL向上に直結。</li>
+        <li><strong>運転試験場コース：</strong>警察庁基準に準拠した正式な運転評価が可能。公式な運転能力評価や行政・医療機関への報告にも対応。</li>
+        <li><strong>両立の意義：</strong>現場の実情（患者のQOL・生活復帰）と公式な評価基準（安全・信頼性）の両立が可能。現場・患者・ご家族・上位部門の全てのニーズに応える運用体制。</li>
+      </ul>
+    </div>
+
+    <div class="new-feature">
+      <h3>🚀 システム最新アップデート完了</h3>
+      <p><strong>更新日：2025年7月3日</strong></p>
+      <p>ポート設定の完全固定化と院内WiFi対応が完了しました。システムの安定性とセキュリティが大幅に向上しています。</p>
+    </div>
+
+    <div class="port-info">
+      <h3>🔧 最新ポート設定（完全固定）</h3>
+      <p><strong>APIサーバー:</strong> ポート3000（完全固定）</p>
+      <p><strong>フロントエンド:</strong> ポート5501（Live Server等）</p>
+      <p><strong>環境変数による変更:</strong> 無効化済み</p>
+      <p><strong>院内WiFi対応:</strong> 有効</p>
+    </div>
+
+    <div class="system-info">
+      <h3>📱 システムアクセスURL（最新版）</h3>
+      <p><strong>院内WiFi環境でのアクセス</strong></p>
+
+      <div class="url-list">
+        <h4>🏠 メインシステム</h4>
+        <ul>
+          <li><strong>脳トレゲーム（記憶編）:</strong> <a href="http://127.0.0.1:5501/brain_training_game.html" target="_blank">http://127.0.0.1:5501/brain_training_game.html</a>
+            <br><small>※ PIN認証後にアクセス可能</small>
+          </li>
+          <li><strong>脳トレゲーム（生活編）:</strong> <a href="http://127.0.0.1:5501/brain_training_game2.html" target="_blank">http://127.0.0.1:5501/brain_training_game2.html</a>
+            <br><small>※ PIN認証後にアクセス可能</small>
+          </li>
+          <li><strong>統合リハビリゲーム（手と上半身の兼用）:</strong> <a href="http://127.0.0.1:5501/integrated_rehabilitation_game.html" target="_blank">http://127.0.0.1:5501/integrated_rehabilitation_game.html</a>
+            <br><small>※ WEBカメラ対応、上半身と手の体操を同時実行</small>
+          </li>
+        </ul>
+
+        <h4>🔐 認証システム</h4>
+        <ul>
+          <li><strong>PIN認証登録:</strong> <a href="http://127.0.0.1:5501/pin_login.html" target="_blank">http://127.0.0.1:5501/pin_login.html</a></li>
+          
+        </ul>
+
+        <h4>⚙️ 管理システム</h4>
+        <ul>
+          <li><strong>統一管理画面:</strong> <a href="http://127.0.0.1:5501/unified_admin.html" target="_blank">http://127.0.0.1:5501/unified_admin.html</a></li>
+          <li><strong>管理ダッシュボード:</strong> <a href="http://127.0.0.1:5501/admin_dashboard.html" target="_blank">http://127.0.0.1:5501/admin_dashboard.html</a></li>
+          <li><strong>スタッフダッシュボード:</strong> <a href="http://127.0.0.1:5501/staff_dashboard.html" target="_blank">http://127.0.0.1:5501/staff_dashboard.html</a></li>
+        </ul>
+
+        <h4>🔗 APIサーバー</h4>
+        <ul>
+          <li><strong>APIエンドポイント:</strong> <a href="http://127.0.0.1:3000/api/" target="_blank">http://127.0.0.1:3000/api/</a></li>
+          <li><strong>利用履歴API:</strong> <a href="http://127.0.0.1:3000/api/usage" target="_blank">http://127.0.0.1:3000/api/usage</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <h2>📋 追加のシミュレーター書類</h2>
+    <ul>
+      <li><a href="PORT_SETTINGS.html" target="_blank">ポート設定完全固定版（HTML版）</a> - ポート設定の完全固定化について</li>
+      <li><a href="HOSPITAL_WIFI_SETUP.html" target="_blank">院内WiFi設定ガイド（HTML版）</a> - 院内WiFi対応設定の詳細</li>
+      <li><a href="脳トレゲーム等_資料一覧_最新版.html" target="_blank">脳トレゲーム等 資料一覧（最新版・HTML版）</a> - 最新のシステム資料一覧</li>
+    </ul>
+
+    <h2>🔧 システム設定ファイル</h2>
+    <ul>
+      <li><a href="../config.js" target="_blank">config.js</a> - サーバー設定（ポート固定）</li>
+      <li><a href="../port_config.js" target="_blank">port_config.js</a> - フロントエンド用ポート設定</li>
+      <li><a href="../server.js" target="_blank">server.js</a> - メインサーバーアプリケーション</li>
+      <li><a href="../game_settings.json" target="_blank">game_settings.json</a> - ゲーム設定ファイル（統合リハビリゲーム対応）</li>
+    </ul>
+
+    <h2>📝 運転技能シミュレーター 技術仕様書</h2>
+    <ul>
+      <li>
+        <b>警察庁基準に準拠した正式な運転評価・検定コースを搭載</b><br>
+        <a href="../public/police_course_simulator.html#settings" target="_blank">検定コース（police_course_simulator.html）</a>
+      </li>
+      <li>
+        <b>実写ストリートビュー・地図・評価表の3分割連動UI</b><br>
+        <a href="../public/police_course_simulator.html" target="_blank">3分割UIサンプル</a>
+      </li>
+      <li>
+        <b>コース選択・評価表連動・ダークモード・現場最適化</b><br>
+        <a href="../public/police_course_simulator.html#settings" target="_blank">設定画面を開く</a>
+      </li>
+      <li>
+        <b>iPad/PC/スマホ対応のレスポンシブ設計</b><br>
+        <a href="../public/police_course_simulator.html" target="_blank">レスポンシブUI例</a>
+      </li>
+      <li>
+        <b>統合運転システムから検定コース・現場用コースを選択可能</b><br>
+        <a href="../integrated_driving_system.html" target="_blank">統合運転システムトップ</a>
+      </li>
+      <li>
+        <b>運転終了後は自動で評価表ページへ遷移・記録・印刷も可能</b><br>
+        <a href="../police_evaluation_form.html" target="_blank">評価表ページ</a>
+      </li>
+      <li>
+        <b>ゲームハンドル（ハンコン）対応も今後追加可能</b><br>
+        <span style="color:#888;">Gamepad APIにより、Logitech G29等のUSBハンドル・ペダル入力をWebブラウザ上で取得し、シミュレーター操作に割り当てる拡張が可能です。</span>
+      </li>
+    </ul>
+
+    <h2>📚 技術仕様書・ドキュメント</h2>
+    <ul>
+      <li><a href="リハビリシステム技術仕様書.html" target="_blank">リハビリシステム技術仕様書（HTML版）</a> - システム全体の技術仕様</li>
+      <li><a href="PIN認証システム技術仕様書.html" target="_blank">PIN認証システム技術仕様書（HTML版）</a></li>
+      <li><a href="法令遵守と運用計画（PIN認証対応版）.html" target="_blank">法令遵守と運用計画（PIN認証対応版・HTML版）</a></li>
+      <li><a href="脳トレゲーム_構築経緯_進行報告書.html" target="_blank">脳トレゲーム_構築経緯_進行報告書（HTML版）</a></li>
+      <li><a href="../iPad対応最適化ガイド.html" target="_blank">iPad対応最適化ガイド</a> - iPadでの利用最適化設定</li>
+      <li><a href="development_roadmap.html" target="_blank">開発ロードマップ（HTML版）</a> - システム開発計画</li>
+      <li><a href="completion_report.html" target="_blank">完成報告書（HTML版）</a> - プロジェクト完了報告</li>
+      <li><a href="統合リハビリゲーム技術仕様書.html" target="_blank">統合リハビリゲーム技術仕様書</a> - 手と上半身の兼用リハビリゲームの技術仕様</li>
+      <li><a href="手の体操リハビリゲーム技術仕様書.html" target="_blank">手の体操リハビリゲーム技術仕様書</a> - WEBカメラ対応手の体操ゲームの技術仕様</li>
+      <li><a href="../今後の本格運用までのルート案.html" target="_blank">今後の本格運用までのルート案（仮定案・HTML版）</a> - 段階的運用移行計画、フェーズ別準備期間、試験運用拡大、本格運用準備</li>
+      <li><a href="../今後の本格運用までのルート案_PDF版.html" target="_blank">今後の本格運用までのルート案（仮定案・PDF版）</a> - 公式提出・会議資料用、印刷最適化版</li>
+    </ul>
+
+    <h2>👥 課長様・承認者向け</h2>
+    <ul>
+      <li><a href="操作マニュアル.html" target="_blank">操作マニュアル</a></li>
+      <li><a href="Q&Aリスト.html" target="_blank">Q&Aリスト</a></li>
+      <li><a href="セキュリティ・運用ルール.html" target="_blank">セキュリティ・運用ルール</a></li>
+      <li><a href="../セキュリティガイドライン.html" target="_blank">セキュリティガイドライン</a> - システムセキュリティの詳細ガイド</li>
+      <li><a href="システム構成図.html" target="_blank">システム構成図</a></li>
+      <li><a href="バージョン情報一覧.html" target="_blank">バージョン情報一覧</a></li>
+      <li><a href="管理者経歴・構築経緯まとめ.html" target="_blank">管理者経歴・構築経緯まとめ</a></li>
+    </ul>
+
+    <h2>💻 情報システム部様向け</h2>
+    <ul>
+      <li><a href="バックアップ・復元手順書.html" target="_blank">バックアップ・復元手順書</a></li>
+      <li><a href="運用記録・点検チェックリスト.html" target="_blank">運用記録・点検チェックリスト</a></li>
+      <li><a href="システム構成図.html" target="_blank">システム構成図</a></li>
+      <li><a href="バージョン情報一覧.html" target="_blank">バージョン情報一覧</a></li>
+      <li><a href="セキュリティ・運用ルール.html" target="_blank">セキュリティ・運用ルール</a></li>
+      <li><a href="../セキュリティガイドライン.html" target="_blank">セキュリティガイドライン</a> - システムセキュリティの詳細ガイド</li>
+      <li><a href="../今後の本格運用までのルート案_PDF版.html" target="_blank">今後の本格運用までのルート案（仮定案・PDF版）</a> - 公式提出用、段階的運用移行計画</li>
+    </ul>
+
+    <h2>👨‍⚕️ 現場スタッフ・利用者向け</h2>
+    <ul>
+      <li><a href="../ユーザーガイド.html" target="_blank">ユーザーガイド</a> - システム利用の詳細ガイド</li>
+      <li><a href="利用者向け簡易ガイド.html" target="_blank">利用者向け簡易ガイド</a></li>
+      <li><a href="現場スタッフ向け操作説明.html" target="_blank">現場スタッフ向け操作説明</a></li>
+      <li><a href="Q&Aリスト.html" target="_blank">Q&Aリスト</a></li>
+    </ul>
+
+    <h2>🔐 管理者用</h2>
+    <ul>
+      <li><a href="バックアップ・復元手順書.html" target="_blank">バックアップ・復元手順書</a></li>
+      <li><a href="運用記録・点検チェックリスト.html" target="_blank">運用記録・点検チェックリスト</a></li>
+      <li><a href="セキュリティ・運用ルール.html" target="_blank">セキュリティ・運用ルール</a></li>
+      <li><a href="../セキュリティガイドライン.html" target="_blank">セキュリティガイドライン</a> - システムセキュリティの詳細ガイド</li>
+      <li><a href="システム構成図.html" target="_blank">システム構成図</a></li>
+      <li><a href="バージョン情報一覧.html" target="_blank">バージョン情報一覧</a></li>
+      <li><a href="管理者経歴・構築経緯まとめ.html" target="_blank">管理者経歴・構築経緯まとめ</a></li>
+    </ul>
+
+    <div class="system-info">
+      <h3>🚀 最新システムの特徴</h3>
+      <ul>
+        <li><strong>ポート完全固定:</strong> 環境変数による変更を無効化、安定性向上</li>
+        <li><strong>院内WiFi対応:</strong> 院内ネットワーク環境での最適化</li>
+        <li><strong>セキュリティ強化:</strong> CORS設定、セッション管理の改善</li>
+        <li><strong>統合管理:</strong> 統一管理画面による一元管理</li>
+        <li><strong>アンケート機能:</strong> 脳トレゲーム記憶編にアンケート機能追加</li>
+        <li><strong>運転シミュレーター:</strong> 警察庁基準対応の評価機能</li>
+        <li><strong>高度脳トレ:</strong> 高齢者向け複合認知機能トレーニング</li>
+      </ul>
+    </div>
+
+    <div class="new-feature">
+      <h3>🔧 起動方法（最新版）</h3>
+      <p><strong>APIサーバー起動:</strong></p>
+      <code>node server.js</code>
+      <p><strong>フロントエンド起動:</strong></p>
+      <code>Live Server等を使用（ポート5501）</code>
+      <p><strong>設定確認:</strong></p>
+      <code>ブラウザコンソールで: window.validatePortConfig();</code>
+    </div>
+
+    <p class="note">必要に応じて、各ファイルを印刷・PDF化してご利用ください。</p>
+    <p class="note">院内WiFi環境では、IPアドレスを実際の院内ネットワークのIPに変更してください。</p>
+  </body>
+</html>

@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>リハビリシステム技術仕様書</title>
+    <style>
+        body {
+            font-family: "Meiryo", "Yu Gothic", sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background: #f9f9f9;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+            text-align: center;
+        }
+        h2 {
+            color: #2980b9;
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #27ae60;
+            margin-top: 25px;
+        }
+        h4 {
+            color: #8e44ad;
+            margin-top: 20px;
+        }
+        .spec-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .spec-table th, .spec-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        .spec-table th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+        }
+        .spec-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .code-block {
+            background: #f4f4f4;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+        .highlight {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .warning {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .info {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        ul, ol {
+            margin: 15px 0;
+            padding-left: 30px;
+        }
+        li {
+            margin: 8px 0;
+        }
+        .architecture-diagram {
+            text-align: center;
+            margin: 30px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+        .version-info {
+            background: #e8f5e8;
+            border: 1px solid #27ae60;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .toc {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .toc ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .toc li {
+            margin: 8px 0;
+        }
+        .toc a {
+            color: #2980b9;
+            text-decoration: none;
+        }
+        .toc a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧠 リハビリシステム技術仕様書</h1>
+        
+        <div class="version-info">
+            <h3>📋 文書情報</h3>
+            <p><strong>作成日:</strong> 2025年7月3日</p>
+            <p><strong>バージョン:</strong> 2.0</p>
+            <p><strong>作成者:</strong> システム開発チーム</p>
+            <p><strong>最終更新:</strong> 2025年7月3日</p>
+        </div>
+
+        <div class="toc">
+            <h3>📑 目次</h3>
+            <ul>
+                <li><a href="#overview">1. システム概要</a></li>
+                <li><a href="#architecture">2. システムアーキテクチャ</a></li>
+                <li><a href="#components">3. 主要コンポーネント</a></li>
+                <li><a href="#database">4. データベース設計</a></li>
+                <li><a href="#api">5. API仕様</a></li>
+                <li><a href="#security">6. セキュリティ仕様</a></li>
+                <li><a href="#performance">7. パフォーマンス仕様</a></li>
+                <li><a href="#deployment">8. デプロイメント仕様</a></li>
+                <li><a href="#maintenance">9. 保守・運用仕様</a></li>
+                <li><a href="#compliance">10. 法令遵守</a></li>
+            </ul>
+        </div>
+
+        <section id="overview">
+            <h2>1. システム概要</h2>
+            
+            <h3>1.1 システム目的</h3>
+            <p>リハビリテーション施設における高齢者向け脳トレーニングシステムを提供し、認知機能の維持・向上を支援する。</p>
+            
+            <h3>1.2 主要機能</h3>
+            <ul>
+                <li><strong>脳トレゲーム:</strong> 記憶力、注意力、判断力向上のためのゲーム</li>
+                <li><strong>ストレス緩和ゲーム:</strong> リラクゼーション効果のあるゲーム</li>
+                <li><strong>PIN認証システム:</strong> セキュアなユーザー認証</li>
+                <li><strong>管理ダッシュボード:</strong> 利用状況の監視・管理</li>
+                <li><strong>音声ガイド:</strong> アクセシビリティ向上のための音声サポート</li>
+            </ul>
+
+            <h3>1.3 対象ユーザー</h3>
+            <ul>
+                <li><strong>利用者:</strong> リハビリテーション施設の高齢者</li>
+                <li><strong>スタッフ:</strong> リハビリテーション担当者</li>
+                <li><strong>管理者:</strong> システム管理者</li>
+            </ul>
+        </section>
+
+        <section id="architecture">
+            <h2>2. システムアーキテクチャ</h2>
+            
+            <h3>2.1 全体構成</h3>
+            <div class="architecture-diagram">
+                <h4>システム構成図</h4>
+                <pre>
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   フロントエンド   │    │   APIサーバー    │    │   データベース   │
+│   (HTML/CSS/JS)  │◄──►│   (Node.js)     │◄──►│   (JSON)       │
+│   ポート: 5501    │    │   ポート: 3000   │    │                │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+         │                       │                       │
+         ▼                       ▼                       ▼
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   音声ガイド     │    │   セッション管理  │    │   ログファイル   │
+│   (Web Speech)  │    │   (Express)     │    │   (JSON)       │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+                </pre>
+            </div>
+
+            <h3>2.2 技術スタック</h3>
+            <table class="spec-table">
+                <tr>
+                    <th>レイヤー</th>
+                    <th>技術</th>
+                    <th>バージョン</th>
+                    <th>説明</th>
+                </tr>
+                <tr>
+                    <td>フロントエンド</td>
+                    <td>HTML5, CSS3, JavaScript</td>
+                    <td>ES2020</td>
+                    <td>レスポンシブデザイン、アクセシビリティ対応</td>
+                </tr>
+                <tr>
+                    <td>バックエンド</td>
+                    <td>Node.js, Express.js</td>
+                    <td>18.x, 4.x</td>
+                    <td>RESTful API、セッション管理</td>
+                </tr>
+                <tr>
+                    <td>データベース</td>
+                    <td>JSONファイル</td>
+                    <td>-</td>
+                    <td>軽量、設定変更不要</td>
+                </tr>
+                <tr>
+                    <td>音声</td>
+                    <td>Web Speech API</td>
+                    <td>-</td>
+                    <td>ブラウザ標準API</td>
+                </tr>
+            </table>
+        </section>
+
+        <section id="components">
+            <h2>3. 主要コンポーネント</h2>
+            
+            <h3>3.1 フロントエンドコンポーネント</h3>
+            
+            <h4>3.1.1 脳トレゲーム</h4>
+            <table class="spec-table">
+                <tr>
+                    <th>ファイル名</th>
+                    <th>機能</th>
+                    <th>技術仕様</th>
+                </tr>
+                <tr>
+                    <td>brain_training_game.html</td>
+                    <td>記憶力トレーニング</td>
+                    <td>Canvas API, 音声ガイド, アンケート機能</td>
+                </tr>
+                <tr>
+                    <td>brain_training_game2.html</td>
+                    <td>生活能力トレーニング</td>
+                    <td>ドラッグ&ドロップ, 音声ガイド</td>
+                </tr>
+            </table>
+
+            <h4>3.1.2 ストレス緩和ゲーム</h4>
+            <table class="spec-table">
+                <tr>
+                    <th>ファイル名</th>
+                    <th>機能</th>
+                    <th>技術仕様</th>
+                </tr>
+                <tr>
+                    <td>stress_relief.html</td>
+                    <td>メイン画面</td>
+                    <td>モーダル表示, ゲーム選択</td>
+                </tr>
+                <tr>
+                    <td>breathing_rhythm.html</td>
+                    <td>呼吸リズムゲーム</td>
+                    <td>Canvas API, 音声ガイド, タイマー</td>
+                </tr>
+                <tr>
+                    <td>sound_bath.html</td>
+                    <td>サウンドバス</td>
+                    <td>Web Audio API, 音声ガイド</td>
+                </tr>
+            </table>
+
+            <h4>3.1.3 認証・管理システム</h4>
+            <table class="spec-table">
+                <tr>
+                    <th>ファイル名</th>
+                    <th>機能</th>
+                    <th>技術仕様</th>
+                </tr>
+                <tr>
+                    <td>pin_login.html</td>
+                    <td>PIN認証</td>
+                    <td>セッション管理, 暗号化</td>
+                </tr>
+                <tr>
+                    <td>unified_admin.html</td>
+                    <td>統一管理画面</td>
+                    <td>ダッシュボード, 統計表示</td>
+                </tr>
+                <tr>
+                    <td>admin_dashboard.html</td>
+                    <td>管理者ダッシュボード</td>
+                    <td>詳細統計, 設定管理</td>
+                </tr>
+            </table>
+
+            <h3>3.2 バックエンドコンポーネント</h3>
+            
+            <h4>3.2.1 APIサーバー</h4>
+            <div class="code-block">
+// server.js 主要機能
+- セッション管理 (express-session)
+- CORS設定 (cors)
+- 静的ファイル配信 (express.static)
+- ログ記録 (morgan)
+- エラーハンドリング
+            </div>
+
+            <h4>3.2.2 データ管理</h4>
+            <ul>
+                <li><strong>ユーザーデータ:</strong> users.json</li>
+                <li><strong>利用履歴:</strong> usage_log.json</li>
+                <li><strong>設定ファイル:</strong> config.json</li>
+                <li><strong>セッション:</strong> メモリ内管理</li>
+            </ul>
+        </section>
+
+        <section id="database">
+            <h2>4. データベース設計</h2>
+            
+            <h3>4.1 データ構造</h3>
+            
+            <h4>4.1.1 ユーザーデータ (users.json)</h4>
+            <div class="code-block">
+{
+  "users": [
+    {
+      "id": "unique_id",
+      "pin": "hashed_pin",
+      "name": "ユーザー名",
+      "role": "user|staff|admin",
+      "created_at": "2025-01-01T00:00:00Z",
+      "last_login": "2025-01-01T00:00:00Z"
+    }
+  ]
+}
+            </div>
+
+            <h4>4.1.2 利用履歴 (usage_log.json)</h4>
+            <div class="code-block">
+{
+  "logs": [
+    {
+      "id": "unique_id",
+      "user_id": "user_id",
+      "game_type": "memory|life|stress",
+      "start_time": "2025-01-01T00:00:00Z",
+      "end_time": "2025-01-01T00:30:00Z",
+      "score": 85,
+      "duration": 1800
+    }
+  ]
+}
+            </div>
+
+            <h3>4.2 データ整合性</h3>
+            <ul>
+                <li><strong>バックアップ:</strong> 日次自動バックアップ</li>
+                <li><strong>整合性チェック:</strong> 起動時自動検証</li>
+                <li><strong>エラー復旧:</strong> 破損時の自動復旧機能</li>
+            </ul>
+        </section>
+
+        <section id="api">
+            <h2>5. API仕様</h2>
+            
+            <h3>5.1 認証API</h3>
+            <table class="spec-table">
+                <tr>
+                    <th>エンドポイント</th>
+                    <th>メソッド</th>
+                    <th>機能</th>
+                    <th>レスポンス</th>
+                </tr>
+                <tr>
+                    <td>/api/auth/login</td>
+                    <td>POST</td>
+                    <td>PIN認証</td>
+                    <td>{success: true, user: {...}}</td>
+                </tr>
+                <tr>
+                    <td>/api/auth/logout</td>
+                    <td>POST</td>
+                    <td>ログアウト</td>
+                    <td>{success: true}</td>
+                </tr>
+                <tr>
+                    <td>/api/auth/register</td>
+                    <td>POST</td>
+                    <td>ユーザー登録</td>
+                    <td>{success: true, user_id: "..."}</td>
+                </tr>
+            </table>
+
+            <h3>5.2 ゲームAPI</h3>
+            <table class="spec-table">
+                <tr>
+                    <th>エンドポイント</th>
+                    <th>メソッド</th>
+                    <th>機能</th>
+                    <th>レスポンス</th>
+                </tr>
+                <tr>
+                    <td>/api/usage</td>
+                    <td>GET</td>
+                    <td>利用履歴取得</td>
+                    <td>{logs: [...]}</td>
+                </tr>
+                <tr>
+                    <td>/api/usage</td>
+                    <td>POST</td>
+                    <td>利用履歴記録</td>
+                    <td>{success: true}</td>
+                </tr>
+                <tr>
+                    <td>/api/stats</td>
+                    <td>GET</td>
+                    <td>統計情報取得</td>
+                    <td>{stats: {...}}</td>
+                </tr>
+            </table>
+
+            <h3>5.3 エラーハンドリング</h3>
+            <div class="code-block">
+// 標準エラーレスポンス
+{
+  "error": true,
+  "message": "エラーメッセージ",
+  "code": "ERROR_CODE"
+}
+
+// 成功レスポンス
+{
+  "success": true,
+  "data": {...}
+}
+            </div>
+        </section>
+
+        <section id="security">
+            <h2>6. セキュリティ仕様</h2>
+            
+            <h3>6.1 認証・認可</h3>
+            <ul>
+                <li><strong>PIN認証:</strong> 4桁数字、ハッシュ化保存</li>
+                <li><strong>セッション管理:</strong> Express Session、セキュア設定</li>
+                <li><strong>ロール管理:</strong> user/staff/admin 3段階</li>
+                <li><strong>セッションタイムアウト:</strong> 30分</li>
+            </ul>
+
+            <h3>6.2 データ保護</h3>
+            <ul>
+                <li><strong>暗号化:</strong> bcrypt によるPINハッシュ化</li>
+                <li><strong>HTTPS:</strong> 本番環境での強制</li>
+                <li><strong>CORS:</strong> 適切なオリジン制限</li>
+                <li><strong>入力検証:</strong> XSS対策、SQLインジェクション対策</li>
+            </ul>
+
+            <h3>6.3 アクセス制御</h3>
+            <table class="spec-table">
+                <tr>
+                    <th>機能</th>
+                    <th>user</th>
+                    <th>staff</th>
+                    <th>admin</th>
+                </tr>
+                <tr>
+                    <td>ゲーム利用</td>
+                    <td>✓</td>
+                    <td>✓</td>
+                    <td>✓</td>
+                </tr>
+                <tr>
+                    <td>利用履歴閲覧</td>
+                    <td>自分のみ</td>
+                    <td>全ユーザー</td>
+                    <td>✓</td>
+                </tr>
+                <tr>
+                    <td>システム設定</td>
+                    <td>✗</td>
+                    <td>✗</td>
+                    <td>✓</td>
+                </tr>
+                <tr>
+                    <td>ユーザー管理</td>
+                    <td>✗</td>
+                    <td>✓</td>
+                    <td>✓</td>
+                </tr>
+            </table>
+        </section>
+
+        <section id="performance">
+            <h2>7. パフォーマンス仕様</h2>
+            
+            <h3>7.1 レスポンス時間</h3>
+            <ul>
+                <li><strong>ページ読み込み:</strong> 3秒以内</li>
+                <li><strong>API応答:</strong> 1秒以内</li>
+                <li><strong>ゲーム開始:</strong> 2秒以内</li>
+                <li><strong>音声再生:</strong> 0.5秒以内</li>
+            </ul>
+
+            <h3>7.2 同時接続数</h3>
+            <ul>
+                <li><strong>推奨同時接続:</strong> 50ユーザー</li>
+                <li><strong>最大同時接続:</strong> 100ユーザー</li>
+                <li><strong>スケーラビリティ:</strong> 水平スケーリング対応</li>
+            </ul>
+
+            <h3>7.3 リソース使用量</h3>
+            <table class="spec-table">
+                <tr>
+                    <th>リソース</th>
+                    <th>最小要件</th>
+                    <th>推奨要件</th>
+                </tr>
+                <tr>
+                    <td>CPU</td>
+                    <td>1コア</td>
+                    <td>2コア</td>
+                </tr>
+                <tr>
+                    <td>メモリ</td>
+                    <td>512MB</td>
+                    <td>1GB</td>
+                </tr>
+                <tr>
+                    <td>ストレージ</td>
+                    <td>100MB</td>
+                    <td>500MB</td>
+                </tr>
+                <tr>
+                    <td>ネットワーク</td>
+                    <td>10Mbps</td>
+                    <td>100Mbps</td>
+                </tr>
+            </table>
+        </section>
+
+        <section id="deployment">
+            <h2>8. デプロイメント仕様</h2>
+            
+            <h3>8.1 環境要件</h3>
+            <ul>
+                <li><strong>OS:</strong> Windows 10/11, macOS, Linux</li>
+                <li><strong>Node.js:</strong> 18.x以上</li>
+                <li><strong>ブラウザ:</strong> Chrome 90+, Firefox 88+, Safari 14+</li>
+                <li><strong>ネットワーク:</strong> 院内WiFi対応</li>
+            </ul>
+
+            <h3>8.2 ポート設定</h3>
+            <div class="highlight">
+                <h4>固定ポート設定</h4>
+                <ul>
+                    <li><strong>APIサーバー:</strong> ポート3000（完全固定）</li>
+                    <li><strong>フロントエンド:</strong> ポート5501（Live Server等）</li>
+                    <li><strong>環境変数による変更:</strong> 無効化済み</li>
+                </ul>
+            </div>
+
+            <h3>8.3 起動手順</h3>
+            <div class="code-block">
+# 1. 依存関係インストール
+npm install
+
+# 2. APIサーバー起動
+node server.js
+
+# 3. フロントエンド起動（Live Server等）
+# ポート5501で起動
+
+# 4. ブラウザでアクセス
+http://127.0.0.1:5501/pin_login.html
+            </div>
+
+            <h3>8.4 設定ファイル</h3>
+            <ul>
+                <li><strong>config.js:</strong> サーバー設定</li>
+                <li><strong>port_config.js:</strong> フロントエンド設定</li>
+                <li><strong>package.json:</strong> 依存関係管理</li>
+            </ul>
+        </section>
+
+        <section id="maintenance">
+            <h2>9. 保守・運用仕様</h2>
+            
+            <h3>9.1 ログ管理</h3>
+            <ul>
+                <li><strong>アクセスログ:</strong> morgan による自動記録</li>
+                <li><strong>エラーログ:</strong> エラー発生時の詳細記録</li>
+                <li><strong>利用履歴:</strong> ゲーム利用状況の記録</li>
+                <li><strong>ログローテーション:</strong> 月次自動ローテーション</li>
+            </ul>
+
+            <h3>9.2 バックアップ</h3>
+            <ul>
+                <li><strong>自動バックアップ:</strong> 日次実行</li>
+                <li><strong>バックアップ対象:</strong> データファイル、設定ファイル</li>
+                <li><strong>保持期間:</strong> 1年間</li>
+                <li><strong>復旧手順:</strong> 自動復旧機能付き</li>
+            </ul>
+
+            <h3>9.3 監視項目</h3>
+            <table class="spec-table">
+                <tr>
+                    <th>監視項目</th>
+                    <th>閾値</th>
+                    <th>アクション</th>
+                </tr>
+                <tr>
+                    <td>CPU使用率</td>
+                    <td>80%</td>
+                    <td>アラート通知</td>
+                </tr>
+                <tr>
+                    <td>メモリ使用率</td>
+                    <td>85%</td>
+                    <td>アラート通知</td>
+                </tr>
+                <tr>
+                    <td>ディスク使用率</td>
+                    <td>90%</td>
+                    <td>アラート通知</td>
+                </tr>
+                <tr>
+                    <td>レスポンス時間</td>
+                    <td>5秒</td>
+                    <td>アラート通知</td>
+                </tr>
+            </table>
+        </section>
+
+        <section id="compliance">
+            <h2>10. 法令遵守</h2>
+            
+            <h3>10.1 個人情報保護</h3>
+            <ul>
+                <li><strong>個人情報保護法:</strong> 完全準拠</li>
+                <li><strong>データ最小化:</strong> 必要最小限の情報のみ収集</li>
+                <li><strong>同意取得:</strong> 利用開始時の明示的同意</li>
+                <li><strong>削除権:</strong> ユーザーによるデータ削除可能</li>
+            </ul>
+
+            <h3>10.2 医療情報保護</h3>
+            <ul>
+                <li><strong>医療・介護関係事業者等の個人情報の適切な取扱いのためのガイダンス:</strong> 準拠</li>
+                <li><strong>アクセス制御:</strong> ロールベースアクセス制御</li>
+                <li><strong>暗号化:</strong> データ転送・保存時の暗号化</li>
+                <li><strong>監査ログ:</strong> アクセス履歴の完全記録</li>
+            </ul>
+
+            <h3>10.3 アクセシビリティ</h3>
+            <ul>
+                <li><strong>JIS X 8341-3:</strong> 高齢者・障害者配慮設計指針準拠</li>
+                <li><strong>音声ガイド:</strong> 視覚障害者対応</li>
+                <li><strong>キーボード操作:</strong> 全機能キーボード対応</li>
+                <li><strong>文字サイズ:</strong> 拡大縮小対応</li>
+            </ul>
+
+            <div class="warning">
+                <h4>⚠️ 重要な注意事項</h4>
+                <ul>
+                    <li>本システムは医療機器ではありません</li>
+                    <li>診断・治療の代替ではありません</li>
+                    <li>異常を感じた場合は医療機関に相談してください</li>
+                    <li>定期的なバックアップとセキュリティ更新を実施してください</li>
+                </ul>
+            </div>
+        </section>
+
+        <div class="info">
+            <h3>📞 サポート・問い合わせ</h3>
+            <p>技術的な問題やご質問がございましたら、システム管理者までお問い合わせください。</p>
+            <p><strong>更新履歴:</strong></p>
+            <ul>
+                <li>2025年7月3日: バージョン2.0 - ポート固定化、院内WiFi対応</li>
+                <li>2025年1月: バージョン1.0 - 初回リリース</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html> 

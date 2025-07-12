@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>脳トレゲーム等 資料一覧（最新版）</title>
+    <style>
+        body {
+            font-family: "Meiryo", "Yu Gothic", sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background: #f9f9f9;
+            color: #333;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+        }
+        .header-info {
+            background: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border-left: 4px solid #3498db;
+        }
+        .status-box {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        .warning {
+            background: #f8d7da;
+            border: 1px solid #dc3545;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 10px 20px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        .back-link:hover {
+            background: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>脳トレゲーム等 資料一覧（最新版）</h1>
+
+        <div class="header-info">
+            <strong>作成日:</strong> 2025年7月3日<br>
+            <strong>対象システム:</strong> 脳機能障害者社会復帰支援システム<br>
+            <strong>バージョン:</strong> 最新版（ポート完全固定）
+        </div>
+
+        <div class="status-box">
+            <h2>現在のサーバー状況</h2>
+            <ul>
+                <li><strong>サーバーIP:</strong> <code>192.168.1.100</code> （院内WiFiの実際のIPアドレスに変更が必要）</li>
+                <li><strong>APIポート:</strong> <code>3000</code> （完全固定）</li>
+                <li><strong>フロントエンドポート:</strong> <code>5500</code> （Live Server等で使用）</li>
+                <li><strong>ステータス:</strong> 正常動作中</li>
+                <li><strong>設定:</strong> ポート完全固定モード</li>
+            </ul>
+        </div>
+
+        <div class="warning">
+            <h2>⚠️ 重要：院内WiFi設定について</h2>
+            <p>現在のサーバーIP（192.168.1.100）は院内WiFi環境では使用できません。実際の院内ネットワークのIPアドレスに変更する必要があります。</p>
+            <p>詳細は「<a href="HOSPITAL_WIFI_SETUP.html">院内WiFi設定ガイド</a>」をご確認ください。</p>
+        </div>
+
+        <a href="index.html" class="back-link">← 資料一覧に戻る</a>
+    </div>
+</body>
+</html> 
