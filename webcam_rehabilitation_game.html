@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>カメラモーションリハビリ体操</title>
+  <style>
+    body {
+      background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+      font-family: 'Segoe UI', 'Meiryo', sans-serif;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 600px;
+      margin: 40px auto;
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+      padding: 32px 24px 24px 24px;
+      text-align: center;
+    }
+    h1 {
+      color: #2574c7;
+      margin-bottom: 10px;
+    }
+    .mode-btns {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .mode-btn {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: #fff;
+      border: none;
+      border-radius: 20px;
+      padding: 12px 28px;
+      font-size: 1.1em;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .mode-btn.selected, .mode-btn:hover {
+      background: linear-gradient(135deg, #45a049, #4CAF50);
+      transform: translateY(-2px) scale(1.04);
+    }
+    .webcam-box {
+      margin: 0 auto 18px auto;
+      width: 320px;
+      height: 240px;
+      background: #222;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .guide {
+      margin: 18px 0 0 0;
+      font-size: 1.15em;
+      color: #333;
+      min-height: 60px;
+      background: #f6f8fa;
+      border-radius: 10px;
+      padding: 14px 10px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .back-btn {
+      margin-top: 24px;
+      display: inline-block;
+      background: #eee;
+      color: #2574c7;
+      border: none;
+      border-radius: 16px;
+      padding: 10px 24px;
+      font-size: 1em;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .back-btn:hover {
+      background: #d0e6fa;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>カメラモーションリハビリ体操</h1>
+    <div class="mode-btns">
+      <button class="mode-btn selected" id="handBtn">✋ 手の体操</button>
+      <button class="mode-btn" id="upperBtn">🧑‍🦽 上半身の体操</button>
+      <button class="mode-btn" id="lowerBtn">🦵 下半身の体操</button>
+    </div>
+    <div class="webcam-box">
+      <video id="webcam" autoplay playsinline></video>
+    </div>
+    <div class="guide" id="guideText">
+      手をグーパー・グルグル回す・指を1本ずつ動かすなど、手の体操をしましょう！
+    </div>
+    <a href="brain_training_game.html" class="back-btn">← メニューに戻る</a>
+  </div>
+  <script>
+    // カメラ起動
+    const video = document.getElementById('webcam');
+    navigator.mediaDevices.getUserMedia({ video: true, audio: false })
+      .then(stream => { video.srcObject = stream; })
+      .catch(err => { document.querySelector('.webcam-box').innerHTML = 'カメラが利用できません'; });
+
+    // モード切替
+    const guideText = document.getElementById('guideText');
+    const btns = [
+      { id: 'handBtn', text: '手をグーパー・グルグル回す・指を1本ずつ動かすなど、手の体操をしましょう！' },
+      { id: 'upperBtn', text: '肩回し・腕伸ばし・胸を開く・上半身ひねりなど、上半身の体操をしましょう！' },
+      { id: 'lowerBtn', text: '足上げ・膝伸ばし・足首回し・スクワットなど、下半身の体操をしましょう！' }
+    ];
+    btns.forEach((btn, idx) => {
+      document.getElementById(btn.id).onclick = function() {
+        btns.forEach(b => document.getElementById(b.id).classList.remove('selected'));
+        this.classList.add('selected');
+        guideText.textContent = btn.text;
+      };
+    });
+  </script>
+</body>
+</html> 

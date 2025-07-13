@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>サウンドバス 音響リラクゼーション</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Meiryo', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            text-align: center;
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+
+        .session-selector {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .session-btn {
+            background: #f8f9fa;
+            color: #333;
+            border: 2px solid #ddd;
+            padding: 15px 25px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1em;
+            min-width: 150px;
+        }
+
+        .session-btn:hover {
+            background: #e9ecef;
+            border-color: #667eea;
+            transform: translateY(-2px);
+        }
+
+        .session-btn.active {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border-color: #667eea;
+        }
+
+        .sound-visualizer {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(180deg, #0B1426 0%, #1a1a2e 100%);
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            margin: 30px 0;
+            border: 3px solid #333;
+        }
+
+        .sound-wave {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 100px;
+            background: linear-gradient(180deg, transparent, rgba(102, 126, 234, 0.3));
+            border-radius: 50% 50% 0 0;
+            animation: wave 3s infinite ease-in-out;
+        }
+
+        .sound-wave:nth-child(2) {
+            animation-delay: -1s;
+            background: linear-gradient(180deg, transparent, rgba(76, 175, 80, 0.3));
+        }
+
+        .sound-wave:nth-child(3) {
+            animation-delay: -2s;
+            background: linear-gradient(180deg, transparent, rgba(255, 193, 7, 0.3));
+        }
+
+        .sound-wave:nth-child(4) {
+            animation-delay: -0.5s;
+            background: linear-gradient(180deg, transparent, rgba(156, 39, 176, 0.3));
+        }
+
+        @keyframes wave {
+            0%, 100% { 
+                transform: translateY(0) scaleY(1); 
+            }
+            50% { 
+                transform: translateY(-30px) scaleY(1.3); 
+            }
+        }
+
+        .frequency-display {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .frequency-bar {
+            width: 8px;
+            background: linear-gradient(180deg, #667eea, #764ba2);
+            border-radius: 4px;
+            animation: frequency 2s infinite ease-in-out;
+        }
+
+        .frequency-bar:nth-child(1) { height: 60px; animation-delay: 0s; }
+        .frequency-bar:nth-child(2) { height: 80px; animation-delay: 0.2s; }
+        .frequency-bar:nth-child(3) { height: 100px; animation-delay: 0.4s; }
+        .frequency-bar:nth-child(4) { height: 120px; animation-delay: 0.6s; }
+        .frequency-bar:nth-child(5) { height: 140px; animation-delay: 0.8s; }
+        .frequency-bar:nth-child(6) { height: 120px; animation-delay: 1s; }
+        .frequency-bar:nth-child(7) { height: 100px; animation-delay: 1.2s; }
+        .frequency-bar:nth-child(8) { height: 80px; animation-delay: 1.4s; }
+        .frequency-bar:nth-child(9) { height: 60px; animation-delay: 1.6s; }
+
+        @keyframes frequency {
+            0%, 100% { transform: scaleY(1); }
+            50% { transform: scaleY(1.5); }
+        }
+
+        .sound-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .sound-type {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .sound-type:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-color: #667eea;
+        }
+
+        .sound-type.active {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border-color: #667eea;
+        }
+
+        .sound-icon {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .volume-control {
+            margin: 20px 0;
+        }
+
+        .volume-control label {
+            display: block;
+            margin-bottom: 10px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .volume-slider {
+            width: 100%;
+            max-width: 300px;
+            height: 8px;
+            border-radius: 5px;
+            background: #ddd;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #667eea;
+            cursor: pointer;
+        }
+
+        .volume-slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #667eea;
+            cursor: pointer;
+            border: none;
+        }
+
+        .timer {
+            font-size: 2.5em;
+            color: #333;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+
+        .stats-panel {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .stat-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #e9ecef;
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .control-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1em;
+        }
+
+        .control-btn:hover {
+            background: #5a6fd8;
+            transform: scale(1.05);
+        }
+
+        .control-btn.paused {
+            background: #ff9800;
+        }
+
+        .back-button {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        .back-button:hover {
+            background: #5a6268;
+            transform: scale(1.05);
+        }
+
+        .result-panel {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .result-panel h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .performance-rating {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin: 1em 0;
+            padding: 0.8em;
+            border-radius: 10px;
+        }
+
+        .rating-excellent { background: #d4edda; color: #155724; }
+        .rating-good { background: #d1ecf1; color: #0c5460; }
+        .rating-average { background: #fff3cd; color: #856404; }
+        .rating-poor { background: #f8d7da; color: #721c24; }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .sound-visualizer {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎵 サウンドバス 音響リラクゼーション</h1>
+        <div class="description">
+            癒しの音でリラクゼーションを体験しましょう。様々な音の組み合わせで心身をリフレッシュできます。
+        </div>
+
+        <div class="session-selector">
+            <button class="session-btn active" data-session="relaxation">リラクゼーション</button>
+            <button class="session-btn" data-session="meditation">瞑想</button>
+            <button class="session-btn" data-session="sleep">睡眠</button>
+            <button class="session-btn" data-session="focus">集中</button>
+            <button class="session-btn" data-session="custom">カスタム</button>
+        </div>
+
+        <div class="sound-visualizer" id="soundVisualizer">
+            <div class="sound-wave"></div>
+            <div class="sound-wave"></div>
+            <div class="sound-wave"></div>
+            <div class="sound-wave"></div>
+        </div>
+
+        <div class="frequency-display" id="frequencyDisplay">
+            <div class="frequency-bar"></div>
+            <div class="frequency-bar"></div>
+            <div class="frequency-bar"></div>
+            <div class="frequency-bar"></div>
+            <div class="frequency-bar"></div>
+            <div class="frequency-bar"></div>
+            <div class="frequency-bar"></div>
+            <div class="frequency-bar"></div>
+            <div class="frequency-bar"></div>
+        </div>
+
+        <div class="sound-types">
+            <div class="sound-type" data-sound="nature">
+                <div class="sound-icon">🌿</div>
+                <div class="sound-title">自然音</div>
+                <div class="sound-desc">雨、風、鳥のさえずり</div>
+            </div>
+            <div class="sound-type" data-sound="ocean">
+                <div class="sound-icon">🌊</div>
+                <div class="sound-title">海の音</div>
+                <div class="sound-desc">波の音、潮騒</div>
+            </div>
+            <div class="sound-type" data-sound="forest">
+                <div class="sound-icon">🌲</div>
+                <div class="sound-title">森の音</div>
+                <div class="sound-desc">木々のざわめき、小川</div>
+            </div>
+            <div class="sound-type" data-sound="white-noise">
+                <div class="sound-icon">⚪</div>
+                <div class="sound-title">ホワイトノイズ</div>
+                <div class="sound-desc">静寂を演出</div>
+            </div>
+            <div class="sound-type" data-sound="ambient">
+                <div class="sound-icon">🎼</div>
+                <div class="sound-title">アンビエント</div>
+                <div class="sound-desc">環境音楽</div>
+            </div>
+            <div class="sound-type" data-sound="binaural">
+                <div class="sound-icon">🧠</div>
+                <div class="sound-title">バイノーラル</div>
+                <div class="sound-desc">脳波同調音</div>
+            </div>
+            <div class="sound-type" data-sound="chimes">
+                <div class="sound-icon">🎐</div>
+                <div class="sound-title">チャイム</div>
+                <div class="sound-desc">清らかな音色</div>
+            </div>
+            <div class="sound-type" data-sound="meditation">
+                <div class="sound-icon">🧘</div>
+                <div class="sound-title">瞑想音楽</div>
+                <div class="sound-desc">心を落ち着かせる</div>
+            </div>
+        </div>
+
+        <div class="volume-control">
+            <label for="volumeSlider">音量調整</label>
+            <input type="range" id="volumeSlider" class="volume-slider" min="0" max="100" value="50">
+        </div>
+
+        <div class="timer" id="timer">準備完了</div>
+
+        <div class="stats-panel">
+            <div class="stat-item">
+                <div class="stat-label">セッション時間</div>
+                <div class="stat-value" id="sessionTime">0分</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">選択音</div>
+                <div class="stat-value" id="selectedSounds">0個</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">音量</div>
+                <div class="stat-value" id="currentVolume">50%</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">状態</div>
+                <div class="stat-value" id="sessionStatus">停止中</div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button class="control-btn" id="startBtn">開始</button>
+            <button class="control-btn" id="pauseBtn" disabled>一時停止</button>
+            <button class="control-btn" onclick="resetSession()">リセット</button>
+        </div>
+
+        <div class="result-panel" id="resultPanel" style="display:none;">
+            <h3>📊 セッション結果</h3>
+            <div id="resultContent"></div>
+        </div>
+
+        <div class="performance-rating" id="performanceRating" style="display:none;"></div>
+
+        <a href="brain_training_game.html" class="back-button">← ゲーム一覧に戻る</a>
+    </div>
+
+    <script>
+        // ゲーム状態
+        let isPlaying = false;
+        let isPaused = false;
+        let currentSession = 'relaxation';
+        let selectedSounds = [];
+        let sessionStartTime = 0;
+        let sessionDuration = 0;
+        let currentVolume = 50;
+        let audioContext = null;
+        let oscillators = [];
+
+        // セッション設定
+        const sessionSettings = {
+            relaxation: {
+                name: 'リラクゼーション',
+                duration: 15,
+                sounds: ['nature', 'ocean', 'ambient'],
+                description: '心身をリラックスさせる音の組み合わせ'
+            },
+            meditation: {
+                name: '瞑想',
+                duration: 20,
+                sounds: ['binaural', 'meditation', 'chimes'],
+                description: '瞑想に最適な音の組み合わせ'
+            },
+            sleep: {
+                name: '睡眠',
+                duration: 30,
+                sounds: ['white-noise', 'ocean', 'ambient'],
+                description: '安眠を促進する音の組み合わせ'
+            },
+            focus: {
+                name: '集中',
+                duration: 25,
+                sounds: ['binaural', 'white-noise', 'ambient'],
+                description: '集中力を高める音の組み合わせ'
+            },
+            custom: {
+                name: 'カスタム',
+                duration: 20,
+                sounds: [],
+                description: '自由に音を組み合わせ'
+            }
+        };
+
+        // 音の設定
+        const soundSettings = {
+            nature: { frequency: 432, type: 'sine', description: '自然の調和音' },
+            ocean: { frequency: 396, type: 'sine', description: '海の波の音' },
+            forest: { frequency: 528, type: 'sine', description: '森のざわめき' },
+            'white-noise': { frequency: 0, type: 'noise', description: 'ホワイトノイズ' },
+            ambient: { frequency: 639, type: 'sine', description: '環境音楽' },
+            binaural: { frequency: 183, type: 'binaural', description: 'バイノーラルビート' },
+            chimes: { frequency: 741, type: 'sine', description: '清らかなチャイム' },
+            meditation: { frequency: 852, type: 'sine', description: '瞑想音楽' }
+        };
+
+        // DOM要素
+        const timerElem = document.getElementById('timer');
+        const sessionTimeElem = document.getElementById('sessionTime');
+        const selectedSoundsElem = document.getElementById('selectedSounds');
+        const currentVolumeElem = document.getElementById('currentVolume');
+        const sessionStatusElem = document.getElementById('sessionStatus');
+        const startBtn = document.getElementById('startBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const resultPanel = document.getElementById('resultPanel');
+        const resultContent = document.getElementById('resultContent');
+        const performanceRating = document.getElementById('performanceRating');
+        const volumeSlider = document.getElementById('volumeSlider');
+
+        // セッション選択
+        document.querySelectorAll('.session-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.session-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentSession = btn.dataset.session;
+                updateSessionInfo();
+            });
+        });
+
+        // 音選択
+        document.querySelectorAll('.sound-type').forEach(sound => {
+            sound.addEventListener('click', () => {
+                const soundType = sound.dataset.sound;
+                if (selectedSounds.includes(soundType)) {
+                    selectedSounds = selectedSounds.filter(s => s !== soundType);
+                    sound.classList.remove('active');
+                } else {
+                    selectedSounds.push(soundType);
+                    sound.classList.add('active');
+                }
+                updateStats();
+            });
+        });
+
+        // 音量調整
+        volumeSlider.addEventListener('input', (e) => {
+            currentVolume = parseInt(e.target.value);
+            updateVolume();
+            updateStats();
+        });
+
+        function updateSessionInfo() {
+            const session = sessionSettings[currentSession];
+            console.log(`セッション変更: ${session.name} - ${session.description}`);
+            
+            if (currentSession !== 'custom') {
+                // プリセット音を選択
+                selectedSounds = [...session.sounds];
+                document.querySelectorAll('.sound-type').forEach(sound => {
+                    const soundType = sound.dataset.sound;
+                    if (selectedSounds.includes(soundType)) {
+                        sound.classList.add('active');
+                    } else {
+                        sound.classList.remove('active');
+                    }
+                });
+            }
+            
+            updateStats();
+        }
+
+        function updateStats() {
+            selectedSoundsElem.textContent = `${selectedSounds.length}個`;
+            currentVolumeElem.textContent = `${currentVolume}%`;
+            
+            if (isPlaying) {
+                sessionStatusElem.textContent = '再生中';
+            } else if (isPaused) {
+                sessionStatusElem.textContent = '一時停止';
+            } else {
+                sessionStatusElem.textContent = '停止中';
+            }
+            
+            if (sessionStartTime > 0) {
+                sessionDuration = Math.floor((Date.now() - sessionStartTime) / 1000 / 60);
+                sessionTimeElem.textContent = `${sessionDuration}分`;
+            }
+        }
+
+        function updateVolume() {
+            oscillators.forEach(osc => {
+                if (osc.gainNode) {
+                    osc.gainNode.gain.setValueAtTime(currentVolume / 100 * 0.3, audioContext.currentTime);
+                }
+            });
+        }
+
+        function createAudioContext() {
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+
+        function playSound(soundType) {
+            if (!audioContext) return;
+            
+            const sound = soundSettings[soundType];
+            if (!sound) return;
+            
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            if (sound.type === 'noise') {
+                // ホワイトノイズの生成
+                const bufferSize = audioContext.sampleRate * 2;
+                const noiseBuffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
+                const output = noiseBuffer.getChannelData(0);
+                
+                for (let i = 0; i < bufferSize; i++) {
+                    output[i] = Math.random() * 2 - 1;
+                }
+                
+                const noise = audioContext.createBufferSource();
+                noise.buffer = noiseBuffer;
+                noise.connect(gainNode);
+                noise.start();
+                oscillators.push({ oscillator: noise, gainNode });
+            } else if (sound.type === 'binaural') {
+                // バイノーラルビート
+                oscillator.frequency.setValueAtTime(sound.frequency, audioContext.currentTime);
+                oscillator.frequency.setValueAtTime(sound.frequency + 10, audioContext.currentTime + 0.1);
+                oscillator.start();
+                oscillators.push({ oscillator, gainNode });
+            } else {
+                // 通常の音
+                oscillator.type = sound.type;
+                oscillator.frequency.setValueAtTime(sound.frequency, audioContext.currentTime);
+                oscillator.start();
+                oscillators.push({ oscillator, gainNode });
+            }
+            
+            gainNode.gain.setValueAtTime(currentVolume / 100 * 0.3, audioContext.currentTime);
+        }
+
+        function stopAllSounds() {
+            oscillators.forEach(osc => {
+                if (osc.oscillator) {
+                    osc.oscillator.stop();
+                }
+            });
+            oscillators = [];
+        }
+
+        function startSession() {
+            if (selectedSounds.length === 0) {
+                alert('音を選択してください。');
+                return;
+            }
+            
+            createAudioContext();
+            
+            isPlaying = true;
+            isPaused = false;
+            sessionStartTime = Date.now();
+            
+            startBtn.disabled = true;
+            pauseBtn.disabled = false;
+            resultPanel.style.display = 'none';
+            performanceRating.style.display = 'none';
+            
+            // 選択された音を再生
+            selectedSounds.forEach(soundType => {
+                playSound(soundType);
+            });
+            
+            updateStats();
+            timerElem.textContent = 'セッション中...';
+            
+            // セッション終了タイマー
+            const session = sessionSettings[currentSession];
+            setTimeout(() => {
+                if (isPlaying) {
+                    endSession();
+                }
+            }, session.duration * 60 * 1000);
+        }
+
+        function pauseSession() {
+            if (!isPlaying) return;
+            
+            isPaused = !isPaused;
+            pauseBtn.textContent = isPaused ? '再開' : '一時停止';
+            pauseBtn.classList.toggle('paused', isPaused);
+            
+            if (isPaused) {
+                audioContext.suspend();
+                timerElem.textContent = '一時停止中';
+            } else {
+                audioContext.resume();
+                timerElem.textContent = 'セッション中...';
+            }
+            
+            updateStats();
+        }
+
+        function endSession() {
+            isPlaying = false;
+            isPaused = false;
+            
+            stopAllSounds();
+            
+            startBtn.disabled = false;
+            pauseBtn.disabled = true;
+            pauseBtn.textContent = '一時停止';
+            pauseBtn.classList.remove('paused');
+            
+            timerElem.textContent = 'セッション完了';
+            
+            const session = sessionSettings[currentSession];
+            const totalSounds = selectedSounds.length;
+            const sessionQuality = Math.round((sessionDuration / session.duration) * 100);
+            
+            // 結果表示
+            resultContent.innerHTML = `
+                <div><strong>セッション:</strong> ${session.name}</div>
+                <div><strong>使用音:</strong> ${totalSounds}個</div>
+                <div><strong>セッション時間:</strong> ${sessionDuration}分</div>
+                <div><strong>目標時間:</strong> ${session.duration}分</div>
+                <div><strong>完了率:</strong> ${sessionQuality}%</div>
+                <div><strong>音量設定:</strong> ${currentVolume}%</div>
+            `;
+            
+            resultPanel.style.display = 'block';
+            
+            // パフォーマンス評価
+            let rating, ratingClass;
+            if (sessionQuality >= 100) {
+                rating = '🌟 完璧！素晴らしいリラクゼーションセッションでした！';
+                ratingClass = 'rating-excellent';
+            } else if (sessionQuality >= 80) {
+                rating = '👍 優秀！とても良いリラクゼーション効果が得られました！';
+                ratingClass = 'rating-good';
+            } else if (sessionQuality >= 60) {
+                rating = '👌 良好！リラクゼーション効果が得られました！';
+                ratingClass = 'rating-average';
+            } else {
+                rating = '💪 初回挑戦！次回はもっとリラックスしましょう！';
+                ratingClass = 'rating-poor';
+            }
+            
+            performanceRating.textContent = rating;
+            performanceRating.className = `performance-rating ${ratingClass}`;
+            performanceRating.style.display = 'block';
+        }
+
+        function resetSession() {
+            isPlaying = false;
+            isPaused = false;
+            sessionStartTime = 0;
+            sessionDuration = 0;
+            
+            stopAllSounds();
+            
+            selectedSounds = [];
+            document.querySelectorAll('.sound-type').forEach(sound => {
+                sound.classList.remove('active');
+            });
+            
+            updateStats();
+            resultPanel.style.display = 'none';
+            performanceRating.style.display = 'none';
+            
+            startBtn.disabled = false;
+            pauseBtn.disabled = true;
+            pauseBtn.textContent = '一時停止';
+            pauseBtn.classList.remove('paused');
+            
+            timerElem.textContent = '準備完了';
+        }
+
+        // イベントリスナー
+        startBtn.addEventListener('click', startSession);
+        pauseBtn.addEventListener('click', pauseSession);
+
+        // 初期化
+        updateSessionInfo();
+        resetSession();
+    </script>
+</body>
+</html> 
